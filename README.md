@@ -41,7 +41,7 @@ The Logger module (`Logger.py`) provides a flexible logging solution for Python 
 
 ### Valkyrie Config
 
-The Config module (`Config.py`) facilitates reading and parsing configuration files, supporting both INI and XML formats. It provides methods to extract configuration values in various data types.
+The Config module (`Config.py`) facilitates reading and parsing configuration files, supporting INI, XML and JSON formats. It provides methods to extract configuration values in various data types.
 > - Refer to the [Valkyrie Config documentation](./readme/config.md) for more information.
 
 ### Valkyrie Options
