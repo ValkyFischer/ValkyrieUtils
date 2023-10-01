@@ -34,6 +34,9 @@ Example:
 
 import ast
 import json
+import re
+import secrets
+import string
 
 
 # ===============================
@@ -225,7 +228,7 @@ class ValkyrieTools:
             return f"{speed:.2f} B/s"
         
     @staticmethod
-    def uniqueHWID():
+    def generateHwid():
         """
         Get a unique hardware ID for the current machine.
         
@@ -234,6 +237,126 @@ class ValkyrieTools:
         """
         import uuid
         return uuid.getnode()
+    
+    @staticmethod
+    def generateCode(length: int = 32, letters: bool = True, digits: bool = True, punctuation: bool = True) -> str:
+        """
+        Generate a random code out of...
+            - letters
+            - digits
+            - punctuation
+        
+        Args:
+            length (int): The length of the code to generate, default is 32.
+            letters (bool): Whether to include letters in the code, default is True.
+            digits (bool): Whether to include digits in the code, default is True.
+            punctuation (bool): Whether to include punctuation in the code, default is True.
+            
+        Returns:
+            str: The generated code.
+        """
+        l = string.ascii_letters if letters is True else ""
+        d = string.digits if digits is True else ""
+        s = string.punctuation if punctuation is True else ""
+        
+        alphabet = l + d + s
+        
+        code = ""
+        for i in range(length):
+            code += "".join(secrets.choice(alphabet))
+        
+        return code
+    
+    @staticmethod
+    def markdownHtml(text: str) -> str:
+        """
+        Parse a string of Markdown to its equivalent HTML part.
+        
+        Args:
+            text (str): The Markdown text to parse.
+            
+        Returns:
+            str: The parsed HTML text.
+            
+        """
+        
+        # Define regular expressions for each Markdown element
+        bold_and_italic = r'\*\*\*(.*?)\*\*\*'
+        bold = r'\*\*(.*?)\*\*'
+        italic = r'\*(.*?)\*'
+        underlined = r'__(.*?)__'
+        strikethrough = r'~~(.*?)~~'
+        inline_code = r'`(.*?)`'
+        code_block = r'```(.*?)```'
+        
+        # Define a pattern for code blocks
+        code_block_pattern = re.compile(code_block, flags = re.DOTALL)
+        
+        # Find code blocks and temporarily replace them with placeholders
+        code_blocks = code_block_pattern.findall(text)
+        code_block_placeholders = []
+        for i, block in enumerate(code_blocks):
+            placeholder = f"|-|CODEBLOCK_PLACEHOLDER_{i}|-|"
+            code_block_placeholders.append(placeholder)
+            text = text.replace(f"```{block}```", placeholder)
+        
+        # Define a pattern for inline code
+        inline_code_pattern = re.compile(inline_code)
+        
+        # Find inline code and temporarily replace them with placeholders
+        inline_codes = inline_code_pattern.findall(text)
+        inline_code_placeholders = []
+        for i, code in enumerate(inline_codes):
+            placeholder = f"|-|INLINECODE_PLACEHOLDER_{i}|-|"
+            inline_code_placeholders.append(placeholder)
+            text = text.replace(f"`{code}`", placeholder)
+        
+        # Replace Markdown elements with HTML, excluding text within code blocks and inline code
+        text = re.sub(bold_and_italic, r'<b><i>\1</i></b>', text)
+        text = re.sub(bold, r'<b>\1</b>', text)
+        text = re.sub(italic, r'<i>\1</i>', text)
+        text = re.sub(underlined, r'<u>\1</u>', text)
+        text = re.sub(strikethrough, r'<s>\1</s>', text)
+        
+        # Replace newlines with <br> and --- with <hr> and replace tabs with 8 spaces
+        text = text.replace("[---]\r\n", "<hr>")
+        text = text.replace("---\r\n", "<hr>")
+        text = text.replace("[---]\r", "<hr>")
+        text = text.replace("---\r", "<hr>")
+        text = text.replace("[---]\n", "<hr>")
+        text = text.replace("---\n", "<hr>")
+        text = text.replace("[---]", "<hr>")
+        text = text.replace("---", "<hr>")
+        text = text.replace("\r\n", "<br>")
+        text = text.replace("\r", "<br>")
+        text = text.replace("\n", "<br>")
+        text = text.replace("\t", "        ")
+        text = text.replace("\\t", "        ")
+        
+        # Replace and embed images, Example: ![Image Text](https://valky.dev/img.png) -> <img src="https://valky.dev/img.png" alt="Image Text">
+        text = re.sub(r'\!\[(.*?)\]\((.*?)\)', r'<img src="\2" alt="\1">', text)
+        
+        # embed links, Example: [Website](https://valky.dev) -> <a href="https://valky.dev">Website</a>
+        text = re.sub(r'\[(.*?)\]\((.*?)\)', r'<a class="handle-link" href="\2" target="_blank">\1</a>', text)
+        
+        # replace some special symbols
+        text = text.replace("-> ", " ➜ ")
+        text = text.replace("=> ", " ⇒ ")
+        text = text.replace(" <3 ", " ❤ ")
+        
+        # Replace code block placeholders back to code blocks
+        for i, placeholder in enumerate(code_block_placeholders):
+            text = text.replace(placeholder, f"```{code_blocks[i]}```")
+        
+        # Replace inline code placeholders back to inline code
+        for i, placeholder in enumerate(inline_code_placeholders):
+            text = text.replace(placeholder, f"`{inline_codes[i]}`")
+        
+        # Replace code blocks and inline code
+        text = re.sub(inline_code, r'<code>\1</code>', text)
+        text = re.sub(code_block, r'<pre><code>\1</code></pre>', text, flags = re.DOTALL)
+        
+        return text
 
 
 # ===============================
@@ -275,4 +398,10 @@ if __name__ == '__main__':
     print(f"Matched dict: {ValkyrieTools.matchDict(test_dict)}")  # Returns {'a': 1, 'b': 2, 'c': 3, 'd': True, 'e': False, 'f': True, 'g': False, 'h': 1.3, 'i': 1.0, 'j': 5, 'k': 'Maybe', 'l': [1, 2, 3], 'm': {'a': 1, 'b': 2}}
     
     # get unique hardware ID
-    print(f"Unique HWID: {ValkyrieTools.uniqueHWID()}")  # Returns a unique hardware ID
+    print(f"Unique HWID: {ValkyrieTools.generateHwid()}")  # Returns a unique hardware ID
+    
+    # generate code
+    print(f"Random Code: {ValkyrieTools.generateCode()}")  # Returns a random code
+    
+    # markdown to html
+    print(f"Markdown to HTML: {ValkyrieTools.markdownHtml('**Hello** *World*!')}")  # Returns <b>Hello</b> <i>World</i>!

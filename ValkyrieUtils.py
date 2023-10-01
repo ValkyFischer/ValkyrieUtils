@@ -60,23 +60,36 @@ def save_config_data(conf, file):
     Args:
         conf (dict): The configuration data to save.
         file (str): The file to save the configuration data to.
+        
+    Returns:
+        None
     """
-    with open(file, 'w') as f:
-        f.write("| {:<15} | {:<75} |\n".format("KEY", "VALUE"))
-        f.write("| {:<15} | {:<75} |\n".format("-"*15, "-"*75))
-        for key, value in conf.items():
-            if isinstance(value, dict):
-                f.write("| {:<15} | {:<75} |\n".format(f"NODE: {key}", ""))
-                for k, v in value.items():
-                    f.write("| {:<15} | {:<75} |\n".format(k, v))
-                f.write("| {:<15} | {:<75} |\n".format("-"*15, "-"*75))
-            else:
-                f.write("| {:<15} | {:<75} |\n".format(key, value))
+    try:
+        with open(file, 'w') as f:
+            f.write("| {:<15} | {:<75} |\n".format("KEY", "VALUE"))
+            f.write("| {:<15} | {:<75} |\n".format("-"*15, "-"*75))
+            for key, value in conf.items():
+                if isinstance(value, dict):
+                    f.write("| {:<15} | {:<75} |\n".format(f"NODE: {key}", ""))
+                    for k, v in value.items():
+                        f.write("| {:<15} | {:<75} |\n".format(k, v))
+                    f.write("| {:<15} | {:<75} |\n".format("-"*15, "-"*75))
+                else:
+                    f.write("| {:<15} | {:<75} |\n".format(key, value))
+                    
+    except Exception as e:
+        raise Exception(f"Failed to save configuration data to file: {e}")
 
 
 def run_test(debug):
     """
     Run a test to demonstrate how to use ValkyrieUtils.
+    
+    Args:
+        debug (bool): Enable debug mode.
+        
+    Returns:
+        None
     """
     from os import path, makedirs
     if not path.exists('logs'):
@@ -132,8 +145,12 @@ def run_test(debug):
     if debug: logger.Debug(f'Compressed Data: {compressed_config}')
     
     # Create a new argon encryption key
-    argon_key = ValkyrieCrypto.generate_argon_key('0123456789abcdef0123456789abcdef', '0123456789abcdef')
+    _key = ValkyrieTools.generateCode(64)
+    _iv = ValkyrieTools.generateCode(24)
+    argon_key = ValkyrieCrypto.generate_argon_key(_key, _iv)
     logger.Info(f'Create a new argon encryption key')
+    if debug: logger.Debug(f'Crypto Key: {_key}')
+    if debug: logger.Debug(f'Crypto IV: {_iv}')
     if debug: logger.Debug(f'Argon Key: {argon_key}')
     
     # Encrypt the compressed configuration data
@@ -151,10 +168,8 @@ def run_test(debug):
     logger.Info(f'Decompress the configuration the data')
     if debug: logger.Debug(f'Decompressed Data: {decompressed_config}')
     
-    # line
+    # print debug data
     if debug: logger.Info('-'*90)
-    
-    # Print the data sizes
     if debug: logger.Debug(f'Compressed Size   : {ValkyrieTools.formatSize(len(compressed_config))}')
     if debug: logger.Debug(f'Decompressed Size : {ValkyrieTools.formatSize(len(pickle.dumps(decompressed_config)))}')
     if debug: logger.Debug(f'Encrypted Size    : {ValkyrieTools.formatSize(len(pickle.dumps(encrypted_config)))}')

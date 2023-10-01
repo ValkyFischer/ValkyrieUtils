@@ -32,7 +32,11 @@ test_dict = {
 print(ValkyrieTools.matchDict(test_dict))
 
 # Get unique hardware ID
-print(ValkyrieTools.uniqueHWID())
+print(ValkyrieTools.generateHwid())
+
+# Markdown formatting
+print(ValkyrieTools.markdownHtml('**Hello** *world*!'))
+
 ```
 
 ### Supported Functions
@@ -46,7 +50,9 @@ print(ValkyrieTools.uniqueHWID())
 - `matchDict(obj)`: Match the input dictionary to the correct type.
 - `formatSize(size)`: Format the input size (in bytes) to a human-readable format.
 - `formatSpeed(speed)`: Format the input speed (in bits) to a human-readable format.
-- `uniqueHWID()`: Generate a unique hardware ID for the current machine.
+- `generateHwid()`: Generate a unique hardware ID for the current machine.
+- `generateCode(length)`: Generate a random code of the specified length.
+- `markdownHtml(text)`: Convert the input Markdown text to HTML.
 
 ### Note
 

@@ -75,11 +75,44 @@ from Options import ValkyrieOptions
 from Compressor import ValkyrieCompressor
 from Crypto import ValkyrieCrypto, AES_GCM
 
-def run_test(debug):
-    # ... (rest of the example script)
 
-if __name__ == '__main__':
-    run_test(debug=False)
+# Create a new logger instance
+logger = ValkyrieLogger('debug', 'logs/logger.log', 'ValkyrieUtils', True)
+logger.Info('Loading a new Valkyrie Logger instance')
+
+# Initialize the command line options
+parser = ValkyrieOptions([
+    ('config_file', 'str', 'Configuration File Path and filename', 'examples/example.ini'),
+])
+options = parser.parse()
+ext = options.config_file.split('.')[-1]
+
+# Read the configuration file
+config = ValkyrieConfig(f'examples/example.{ext}')
+
+# Get the complete configuration as a dictionary
+config_dict = ValkyrieTools.matchDict(config.get_config())
+
+# Get the configuration nodes as a dictionary
+config_dict_1 = ValkyrieTools.matchDict(config.get_dict("Test1"))
+config_dict_2 = ValkyrieTools.matchDict(config.get_dict("Test2"))
+
+# Compress the configuration data
+compressed_config = ValkyrieCompressor.deflate(pickle.dumps(config_dict), 'zstd')
+
+# Create a new argon encryption key
+_key = ValkyrieTools.generateCode(64)
+_iv = ValkyrieTools.generateCode(24)
+argon_key = ValkyrieCrypto.generate_argon_key(_key, _iv)
+
+# Encrypt the compressed configuration data
+encrypted_config = ValkyrieCrypto.encrypt_data(argon_key, compressed_config, AES_GCM)
+
+# Decrypt the ciphertext
+decryption_config = ValkyrieCrypto.decrypt_data(argon_key, encrypted_config, AES_GCM)
+
+# Decompress the configuration data
+decompressed_config = pickle.loads(ValkyrieCompressor.inflate(decryption_config, 'zstd'))
 ```
 
 The above example showcases how to utilize ValkyrieUtils modules in a Python script. Modify the `run_test` function as needed to suit your application's requirements.
