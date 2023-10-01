@@ -33,6 +33,7 @@ Example:
 """
 
 import ast
+import json
 
 
 # ===============================
@@ -127,6 +128,23 @@ class ValkyrieTools:
             return isinstance(obj, dict)
     
     @staticmethod
+    def isJson(obj):
+        """
+        Check if the input is a JSON string.
+
+        Args:
+            obj (any): The input value to check.
+
+        Returns:
+            bool: True if the input is a JSON string, False otherwise.
+        """
+        try:
+            json.loads(obj)
+            return True
+        except json.JSONDecodeError:
+            return False
+    
+    @staticmethod
     def matchDict(obj: dict):
         """
         Match the input dictionary to the correct type.
@@ -167,6 +185,55 @@ class ValkyrieTools:
                     matched[entity] = str(settings)
         
         return matched
+    
+    @staticmethod
+    def formatSize(size):
+        """
+        Format the file size in a human-readable format.
+        
+        Args:
+            size (int): The file size in bytes.
+            
+        Returns:
+            str: The formatted file size.
+        """
+        if size >= 1e9:  # Gigabytes
+            return f"{size / 1e9:.2f} GB"
+        elif size >= 1e6:  # Megabytes
+            return f"{size / 1e6:.2f} MB"
+        elif size >= 1e3:  # Kilobytes
+            return f"{size / 1e3:.2f} KB"
+        else:  # Bytes
+            return f"{size:.2f} B"
+        
+    @staticmethod
+    def formatSpeed(speed):
+        """
+        Format the speed in a human-readable format.
+        
+        Args:
+            speed (int): The speed in bytes per second.
+            
+        Returns:
+            str: The formatted speed.
+        """
+        if speed >= 1e6:  # Megabytes per second
+            return f"{speed / 1e6:.2f} MB/s"
+        elif speed >= 1e3:  # Kilobytes per second
+            return f"{speed / 1e3:.2f} KB/s"
+        else:  # Bytes per second
+            return f"{speed:.2f} B/s"
+        
+    @staticmethod
+    def uniqueHWID():
+        """
+        Get a unique hardware ID for the current machine.
+        
+        Returns:
+            str: The unique hardware ID.
+        """
+        import uuid
+        return uuid.getnode()
 
 
 # ===============================
@@ -206,3 +273,6 @@ if __name__ == '__main__':
         "h": "1.3", "i": "1.0", "j": "5", "k": "Maybe", "l": "[1, 2, 3]", "m": "{'a': 1, 'b': 2}"
     }
     print(f"Matched dict: {ValkyrieTools.matchDict(test_dict)}")  # Returns {'a': 1, 'b': 2, 'c': 3, 'd': True, 'e': False, 'f': True, 'g': False, 'h': 1.3, 'i': 1.0, 'j': 5, 'k': 'Maybe', 'l': [1, 2, 3], 'm': {'a': 1, 'b': 2}}
+    
+    # get unique hardware ID
+    print(f"Unique HWID: {ValkyrieTools.uniqueHWID()}")  # Returns a unique hardware ID

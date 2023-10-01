@@ -155,10 +155,10 @@ def run_test(debug):
     if debug: logger.Info('-'*90)
     
     # Print the data sizes
-    if debug: logger.Debug(f'Compressed Size   : {len(compressed_config)} bytes')
-    if debug: logger.Debug(f'Decompressed Size : {len(pickle.dumps(decompressed_config))} bytes')
-    if debug: logger.Debug(f'Encrypted Size    : {len(pickle.dumps(encrypted_config))} bytes')
-    if debug: logger.Debug(f'Decrypted Size    : {len(decryption_config)} bytes')
+    if debug: logger.Debug(f'Compressed Size   : {ValkyrieTools.formatSize(len(compressed_config))}')
+    if debug: logger.Debug(f'Decompressed Size : {ValkyrieTools.formatSize(len(pickle.dumps(decompressed_config)))}')
+    if debug: logger.Debug(f'Encrypted Size    : {ValkyrieTools.formatSize(len(pickle.dumps(encrypted_config)))}')
+    if debug: logger.Debug(f'Decrypted Size    : {ValkyrieTools.formatSize(len(decryption_config))}')
     
     # line
     logger.Info('-'*90)
