@@ -17,6 +17,7 @@ print(ValkyrieTools.isList([1, 2, 3]))  # True
 print(ValkyrieTools.isList({'a': 1, 'b': 2}))  # False
 print(ValkyrieTools.isDict({'a': 1, 'b': 2}))  # True
 print(ValkyrieTools.isBoolean('True'))  # True
+print(ValkyrieTools.isBoolean('False'))  # True
 print(ValkyrieTools.isBoolean('Maybe'))  # False
 print(ValkyrieTools.isFloat('1.0'))  # True
 print(ValkyrieTools.isFloat(1))  # False
@@ -29,8 +30,9 @@ test_dict = {
     "h": "1.3", "i": "1.0", "j": "5", "k": "Maybe", "l": "[1, 2, 3]", "m": "{'a': 1, 'b': 2}"
 }
 print(ValkyrieTools.matchDict(test_dict))
-# Returns {'a': 1, 'b': 2, 'c': 3, 'd': True, 'e': False, 'f': True, 'g': False,
-#          'h': 1.3, 'i': 1.0, 'j': 5, 'k': 'Maybe', 'l': [1, 2, 3], 'm': {'a': 1, 'b': 2}}
+
+# Get unique hardware ID
+print(ValkyrieTools.uniqueHWID())
 ```
 
 ### Supported Functions
@@ -40,7 +42,11 @@ print(ValkyrieTools.matchDict(test_dict))
 - `isBoolean(obj)`: Check if the input represents a boolean value.
 - `isList(obj)`: Check if the input is a list.
 - `isDict(obj)`: Check if the input is a dictionary.
+- `isJson(obj)`: Check if the input is a valid JSON string.
 - `matchDict(obj)`: Match the input dictionary to the correct type.
+- `formatSize(size)`: Format the input size (in bytes) to a human-readable format.
+- `formatSpeed(speed)`: Format the input speed (in bits) to a human-readable format.
+- `uniqueHWID()`: Generate a unique hardware ID for the current machine.
 
 ### Note
 
