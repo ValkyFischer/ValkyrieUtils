@@ -27,6 +27,7 @@ To use Valkyrie Utils, you'll need to import the desired module(s) into your Pyt
 - **Config**: Enables easy reading and parsing of configuration files (both INI and XML).
 - **Options**: Allows you to define and parse command-line options with specified data types and default values.
 - **Compressor**: Provides a utility to compress and decompress data using various compression modes.
+- **Crypto**: Offers functions to encrypt and decrypt data using AES-GCM, AES-CTR, and AES-CBC.
 - **Tools**: Provides functions to validate various data types (e.g., float, integer, boolean, list, dictionary).
 
 ## Modules
@@ -63,7 +64,7 @@ The Tools module (`Tools.py`) offers functions to validate different data types,
 
 ```python
 # Example usage of ValkyrieUtils modules
-# Run this script with the following command: python ValkyrieUtils.py --config_file example.xml
+# Run this script with the following command: python ValkyrieUtils.py --config_file examples/example.xml
 
 from Logger import ValkyrieLogger
 from Config import ValkyrieConfig
