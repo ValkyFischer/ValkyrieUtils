@@ -69,6 +69,8 @@ from Logger import ValkyrieLogger
 from Config import ValkyrieConfig
 from Tools import ValkyrieTools
 from Options import ValkyrieOptions
+from Compressor import ValkyrieCompressor
+from Crypto import ValkyrieCrypto, AES_GCM
 
 def run_test(debug):
     # ... (rest of the example script)
