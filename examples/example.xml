@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Config>
+    <Test1 version="test_0.1" order="1" value="test_key_xml" />
+    <Test2 name="test_xml" order="2" value="2000">DataXML</Test2>
+</Config>
