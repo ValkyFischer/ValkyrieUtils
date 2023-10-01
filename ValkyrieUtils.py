@@ -12,6 +12,8 @@ About:
         - Config.py
         - Tools.py
         - Options.py
+        - Compressor.py
+        - Crypto.py
 --------
 
 Usage:
@@ -23,11 +25,18 @@ Example:
     
     >>> config = ValkyrieConfig('example.ini')
     
-    >>> matched_config = ValkyrieTools.matchDict(config.get_dict("Test1"))
-    
     >>> parser = ValkyrieOptions([
     ...    ('config_file', 'str', 'Configuration File Path and filename', 'example.ini'),
     ... ])
+    
+    >>> compressed_data = ValkyrieCompressor.deflate(b"Sample data to be compressed", 'zstd')
+    >>> decompressed_data = ValkyrieCompressor.inflate(compressed_data, 'zstd')
+    
+    >>> argon_key = ValkyrieCrypto.generate_argon_key('0123456789abcdef0123456789abcdef', '0123456789abcdef')
+    >>> encrypted_data = ValkyrieCrypto.encrypt_data(argon_key, b"Sample data to be encrypted")
+    >>> decrypted_data = ValkyrieCrypto.decrypt_data(argon_key, encrypted_data)
+    
+    >>> matched_config = ValkyrieTools.matchDict(config.get_dict("Test1"))
 
 """
 
@@ -35,6 +44,10 @@ from Logger import ValkyrieLogger
 from Config import ValkyrieConfig
 from Tools import ValkyrieTools
 from Options import ValkyrieOptions
+from Compressor import ValkyrieCompressor
+from Crypto import ValkyrieCrypto, AES_GCM
+
+import pickle
 
 
 # ===============================
@@ -73,6 +86,7 @@ def run_test(debug):
     logger = ValkyrieLogger('debug' if debug else 'info', 'logs/logger.log', 'ValkyrieUtils', True, debug)
     logger.Info('Loading a new Valkyrie Utils instance')
     
+    # line
     logger.Info('-'*90)
     
     # Initialize the command line options
@@ -112,6 +126,41 @@ def run_test(debug):
     if debug: logger.Debug(f'File: examples/out/Test1_{ext}.conf')
     if debug: logger.Debug(f'File: examples/out/Test2_{ext}.conf')
     
+    # Compress the configuration data
+    compressed_config = ValkyrieCompressor.deflate(pickle.dumps(config_dict), 'zstd')
+    logger.Info(f'Compress the configuration the data')
+    if debug: logger.Debug(f'Compressed Data: {compressed_config}')
+    
+    # Create a new argon encryption key
+    argon_key = ValkyrieCrypto.generate_argon_key('0123456789abcdef0123456789abcdef', '0123456789abcdef')
+    logger.Info(f'Create a new argon encryption key')
+    if debug: logger.Debug(f'Argon Key: {argon_key}')
+    
+    # Encrypt the compressed configuration data
+    encrypted_config = ValkyrieCrypto.encrypt_data(argon_key, compressed_config, AES_GCM)
+    logger.Info(f'Encrypt the compressed configuration data')
+    if debug: logger.Debug(f'Encrypted Data: {encrypted_config}')
+    
+    # Decrypt the ciphertext
+    decryption_config = ValkyrieCrypto.decrypt_data(argon_key, encrypted_config, AES_GCM)
+    logger.Info(f'Decrypt the compressed configuration data')
+    if debug: logger.Debug(f'Decrypted Data: {decryption_config}')
+    
+    # Decompress the configuration data
+    decompressed_config = pickle.loads(ValkyrieCompressor.inflate(decryption_config, 'zstd'))
+    logger.Info(f'Decompress the configuration the data')
+    if debug: logger.Debug(f'Decompressed Data: {decompressed_config}')
+    
+    # line
+    if debug: logger.Info('-'*90)
+    
+    # Print the data sizes
+    if debug: logger.Debug(f'Compressed Size   : {len(compressed_config)} bytes')
+    if debug: logger.Debug(f'Decompressed Size : {len(pickle.dumps(decompressed_config))} bytes')
+    if debug: logger.Debug(f'Encrypted Size    : {len(pickle.dumps(encrypted_config))} bytes')
+    if debug: logger.Debug(f'Decrypted Size    : {len(decryption_config)} bytes')
+    
+    # line
     logger.Info('-'*90)
 
 
@@ -119,4 +168,4 @@ def run_test(debug):
 
 
 if __name__ == '__main__':
-    run_test(debug=True)
+    run_test(debug=False)

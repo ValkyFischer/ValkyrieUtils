@@ -9,8 +9,10 @@ Valkyrie Utils is a Python utility library that provides convenient and flexible
 - [Modules](#modules)
   - [Logger](#valkyrie-logger)
   - [Config](#valkyrie-config)
-  - [Tools](#valkyrie-tools)
   - [Options](#valkyrie-options)
+  - [Compressor](#valkyrie-compressor)
+  - [Crypto](#valkyrie-crypto)
+  - [Tools](#valkyrie-tools)
 - [Example Usage](#example-usage)
 
 ## About
@@ -23,8 +25,9 @@ To use Valkyrie Utils, you'll need to import the desired module(s) into your Pyt
 
 - **Logger**: Facilitates easy logging with configurable log levels and file handling.
 - **Config**: Enables easy reading and parsing of configuration files (both INI and XML).
-- **Tools**: Provides functions to validate various data types (e.g., float, integer, boolean, list, dictionary).
 - **Options**: Allows you to define and parse command-line options with specified data types and default values.
+- **Compressor**: Provides a utility to compress and decompress data using various compression modes.
+- **Tools**: Provides functions to validate various data types (e.g., float, integer, boolean, list, dictionary).
 
 ## Modules
 
@@ -38,15 +41,23 @@ The Logger module (`Logger.py`) provides a flexible logging solution for Python 
 The Config module (`Config.py`) facilitates reading and parsing configuration files, supporting both INI and XML formats. It provides methods to extract configuration values in various data types.
 > - Refer to the [Valkyrie Config documentation](./readme/config.md) for more information.
 
-### Valkyrie Tools
-
-The Tools module (`Tools.py`) offers functions to validate different data types, such as float, integer, boolean, list, and dictionary. It also includes a function to match dictionary values to their appropriate data types.
-> - Refer to the [Valkyrie Tools documentation](./readme/tools.md) for more information.
-
 ### Valkyrie Options
 
-The Options module (`Options.py`) helps manage command-line options by allowing easy definition of options with specified data types, help messages, and default values. It provides a way to parse and access these options within your script.
+The Options module (`Options.py`) helps manage command-line options by allowing easy definition of options with specified data types, help messages, and default values.
 > - Refer to the [Valkyrie Options documentation](./readme/options.md) for more information.
+
+### Valkyrie Compressor
+The Compressor module (`Compressor.py`) provides a utility to compress and decompress data using various compression modes such as gzip, bzip2, lzma, lz4, zstd, and none (no compression).
+> - Refer to the [Valkyrie Compressor documentation](./readme/compressor.md) for more information.
+
+### Valkyrie Crypto
+The Crypto module (`Crypto.py`) provides functions to encrypt and decrypt data using AES-GCM, AES-CTR, and AES-CBC with an Argon2 generated encryption key.
+> - Refer to the [Valkyrie Crypto documentation](./readme/crypto.md) for more information.
+
+### Valkyrie Tools
+
+The Tools module (`Tools.py`) offers functions to validate different data types, such as float, integer, boolean, list, and dictionary; including a function to match dictionary values to their appropriate data types.
+> - Refer to the [Valkyrie Tools documentation](./readme/tools.md) for more information.
 
 ## Example Usage
 
