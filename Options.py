@@ -106,7 +106,8 @@ class ValkyrieOptions:
                     line = line.strip()
                     if line.startswith('[') or line.startswith('#'):
                         continue
-                    key, value = line.split('=', 1)
+                    if '=' in line:
+                        key, value = line.split('=', 1)
                     option = self._parser.get_option('--' + key)
                     if option is None or key in result and result[key] is not None:
                         continue
@@ -114,6 +115,7 @@ class ValkyrieOptions:
                         result[key] = int(value)
                     else:
                         result[key] = value.strip()
+        
         except IOError:
             pass
         

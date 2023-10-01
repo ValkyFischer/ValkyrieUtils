@@ -77,7 +77,7 @@ def run_test(debug):
     
     # Initialize the command line options
     parser = ValkyrieOptions([
-        ('config_file', 'str', 'Configuration File Path and filename', 'example/example.ini'),
+        ('config_file', 'str', 'Configuration File Path and filename', 'examples/example.ini'),
     ])
     options = parser.parse()
     ext = options.config_file.split('.')[-1]
@@ -119,4 +119,4 @@ def run_test(debug):
 
 
 if __name__ == '__main__':
-    run_test(debug=False)
+    run_test(debug=True)

@@ -286,4 +286,5 @@ if __name__ == '__main__':
     print(config_reader_xml.get_dict("Test2"))  # returns dict
     print(config_reader_xml.get_value("Test1"))  # returns None
     print(config_reader_xml.get_value("Test2"))  # returns TestXML
+    print(config_reader_xml.get_config())  # returns dict
     
