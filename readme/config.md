@@ -1,4 +1,3 @@
-
 ## Valkyrie Config Module
 
 The Config module (`Config.py`) provides a versatile configuration reader for INI and XML files. It allows users to easily read and retrieve configuration values from these file formats. The supported operations include fetching values as strings, integers, floats, booleans, and dictionaries, allowing for flexible usage based on the configuration file type.

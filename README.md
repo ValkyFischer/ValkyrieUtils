@@ -7,10 +7,10 @@ Valkyrie Utils is a Python utility library that provides convenient and flexible
 - [About](#about)
 - [Usage](#usage)
 - [Modules](#modules)
-  - [Logger](#logger)
-  - [Config](#config)
-  - [Tools](#tools)
-  - [Options](#options)
+  - [Logger](#valkyrie-logger)
+  - [Config](#valkyrie-config)
+  - [Tools](#valkyrie-tools)
+  - [Options](#valkyrie-options)
 - [Example Usage](#example-usage)
 
 ## About

@@ -1,4 +1,3 @@
-
 ## Valkyrie Tools Module
 
 The Tools module (`Tools.py`) provides utility functions within the `ValkyrieTools` class to check and match various types of input. It can determine if an object can be interpreted as a float, integer, boolean, list, or dictionary. Additionally, it offers a function to match a dictionary's values to their correct data types based on these types.
