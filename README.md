@@ -1,6 +1,6 @@
 # Valkyrie Utils
 
-Valkyrie Utils is a Python utility library that provides convenient and flexible functionalities through its four main modules: Logger, Config, Tools, and Options.
+Valkyrie Utils is a Python utility library that provides convenient and flexible functionalities through its four main modules: Logger, Config, Options, Compressor, Crypto and Tools.
 
 ## Table of Contents
 
@@ -17,7 +17,9 @@ Valkyrie Utils is a Python utility library that provides convenient and flexible
 
 ## About
 
-This utility library was created to demonstrate how to use ValkyrieUtils modules in Python applications. The modules offer functionality to handle logging, configuration, data validation, and command-line options efficiently.
+This utility library was created to demonstrate how to use ValkyrieUtils modules in Python applications. The modules 
+offer functionality to facilitate common tasks such as logging, configuration parsing, command-line option parsing, 
+data compression, data encryption, and data validation.
 
 ## Usage
 
