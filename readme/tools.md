@@ -50,11 +50,18 @@ print(ValkyrieTools.markdownHtml('**Hello** *world*!'))
 - `matchDict(obj)`: Match the input dictionary to the correct type.
 - `formatSize(size)`: Format the input size (in bytes) to a human-readable format.
 - `formatSpeed(speed)`: Format the input speed (in bits) to a human-readable format.
+- `formatTime(time)`: Format the input time (in seconds) to a human-readable format.
 - `generateHwid()`: Generate a unique hardware ID for the current machine.
 - `generateCode(length)`: Generate a random code of the specified length.
 - `markdownHtml(text)`: Convert the input Markdown text to HTML.
+- `getHash(data, hash_type)`: Get the hash of the input data.
+- `getFileHash(file_path, hash_type, buffer)`: Get the hash of the input file.
+- `getFileSize(file_path)`: Get the size of the input file.
+- `getFileList(path)`: Get a list of all files in the directories.
 
-### Note
+---
+
+#### Note
 
 For the `matchDict` function, it identifies and matches the following types:
 - Integer
@@ -63,4 +70,4 @@ For the `matchDict` function, it identifies and matches the following types:
 - List
 - Dictionary
 
-Any value that doesn't match these types is treated as a string.
+*Any value that doesn't match these types is treated as a string.*

@@ -33,7 +33,9 @@ Example:
 """
 
 import ast
+import hashlib
 import json
+import os
 import re
 import secrets
 import string
@@ -44,7 +46,7 @@ import string
 
 class ValkyrieTools:
     @staticmethod
-    def isFloat(obj):
+    def isFloat(obj: any) -> bool:
         """
         Check if the input can be parsed as a float.
 
@@ -61,7 +63,7 @@ class ValkyrieTools:
             return False
     
     @staticmethod
-    def isInteger(obj):
+    def isInteger(obj: any) -> bool:
         """
         Check if the input can be parsed as an integer.
 
@@ -78,7 +80,7 @@ class ValkyrieTools:
             return False
     
     @staticmethod
-    def isBoolean(obj):
+    def isBoolean(obj: any) -> bool:
         """
         Check if the input represents a boolean value.
 
@@ -94,12 +96,12 @@ class ValkyrieTools:
             return False
     
     @staticmethod
-    def isList(obj):
+    def isList(obj: any) -> bool:
         """
         Check if the input is a list.
 
         Args:
-            obj: The input value to check.
+            obj (any): The input value to check.
 
         Returns:
             bool: True if the input is a list, False otherwise.
@@ -112,12 +114,12 @@ class ValkyrieTools:
         return isinstance(obj, list)
     
     @staticmethod
-    def isDict(obj):
+    def isDict(obj: any) -> bool:
         """
         Check if the input is a dictionary.
 
         Args:
-            obj: The input value to check.
+            obj (any): The input value to check.
 
         Returns:
             bool: True if the input is a dictionary, False otherwise.
@@ -131,7 +133,7 @@ class ValkyrieTools:
             return isinstance(obj, dict)
     
     @staticmethod
-    def isJson(obj):
+    def isJson(obj: any) -> bool:
         """
         Check if the input is a JSON string.
 
@@ -148,7 +150,7 @@ class ValkyrieTools:
             return False
     
     @staticmethod
-    def matchDict(obj: dict):
+    def matchDict(obj: dict) -> dict:
         """
         Match the input dictionary to the correct type.
         
@@ -190,7 +192,7 @@ class ValkyrieTools:
         return matched
     
     @staticmethod
-    def formatSize(size):
+    def formatSize(size: int) -> str:
         """
         Format the file size in a human-readable format.
         
@@ -210,7 +212,7 @@ class ValkyrieTools:
             return f"{size:.2f} B"
         
     @staticmethod
-    def formatSpeed(speed):
+    def formatSpeed(speed: int) -> str:
         """
         Format the speed in a human-readable format.
         
@@ -228,7 +230,28 @@ class ValkyrieTools:
             return f"{speed:.2f} B/s"
         
     @staticmethod
-    def generateHwid():
+    def formatTime(seconds: int, full: bool = False) -> str:
+        """
+        Format the time in a human-readable format.
+
+        Args:
+            seconds (int): The time in seconds.
+            full (bool): Whether to include all time units or only the largest one. Default is False.
+
+        Returns:
+            str: The formatted time.
+        """
+        if seconds >= 86400:  # Days
+            return f"{seconds / 86400:.2f} days {seconds % 86400 / 3600:.2f} hours {seconds % 3600 / 60:.2f} minutes {seconds % 60:.2f} seconds" if full else f"{seconds / 86400:.2f} days"
+        elif seconds >= 3600:  # Hours
+            return f"{seconds / 3600:.2f} hours {seconds % 3600 / 60:.2f} minutes {seconds % 60:.2f} seconds" if full else f"{seconds / 3600:.2f} hours"
+        elif seconds >= 60:  # Minutes
+            return f"{seconds / 60:.2f} minutes {seconds % 60:.2f} seconds" if full else f"{seconds / 60:.2f} minutes"
+        else:  # Seconds
+            return f"{seconds:.2f} seconds"
+
+    @staticmethod
+    def generateHwid() -> str:
         """
         Get a unique hardware ID for the current machine.
         
@@ -241,7 +264,7 @@ class ValkyrieTools:
     @staticmethod
     def generateCode(length: int = 32, letters: bool = True, digits: bool = True, punctuation: bool = True) -> str:
         """
-        Generate a random code out of...
+        Generate a random code out of:
             - letters
             - digits
             - punctuation
@@ -296,7 +319,7 @@ class ValkyrieTools:
         code_blocks = code_block_pattern.findall(text)
         code_block_placeholders = []
         for i, block in enumerate(code_blocks):
-            placeholder = f"|-|CODEBLOCK_PLACEHOLDER_{i}|-|"
+            placeholder = f"|-|CODE_BLOCK_PLACEHOLDER_{i}|-|"
             code_block_placeholders.append(placeholder)
             text = text.replace(f"```{block}```", placeholder)
         
@@ -307,7 +330,7 @@ class ValkyrieTools:
         inline_codes = inline_code_pattern.findall(text)
         inline_code_placeholders = []
         for i, code in enumerate(inline_codes):
-            placeholder = f"|-|INLINECODE_PLACEHOLDER_{i}|-|"
+            placeholder = f"|-|INLINE_CODE_PLACEHOLDER_{i}|-|"
             inline_code_placeholders.append(placeholder)
             text = text.replace(f"`{code}`", placeholder)
         
@@ -334,10 +357,10 @@ class ValkyrieTools:
         text = text.replace("\\t", "        ")
         
         # Replace and embed images, Example: ![Image Text](https://valky.dev/img.png) -> <img src="https://valky.dev/img.png" alt="Image Text">
-        text = re.sub(r'\!\[(.*?)\]\((.*?)\)', r'<img src="\2" alt="\1">', text)
+        text = re.sub(r'!\[(.*?)]\((.*?)\)', r'<img src="\2" alt="\1">', text)
         
         # embed links, Example: [Website](https://valky.dev) -> <a href="https://valky.dev">Website</a>
-        text = re.sub(r'\[(.*?)\]\((.*?)\)', r'<a class="handle-link" href="\2" target="_blank">\1</a>', text)
+        text = re.sub(r'\[(.*?)]\((.*?)\)', r'<a class="handle-link" href="\2" target="_blank">\1</a>', text)
         
         # replace some special symbols
         text = text.replace("-> ", " ➜ ")
@@ -353,10 +376,90 @@ class ValkyrieTools:
             text = text.replace(placeholder, f"`{inline_codes[i]}`")
         
         # Replace code blocks and inline code
-        text = re.sub(inline_code, r'<code>\1</code>', text)
         text = re.sub(code_block, r'<pre><code>\1</code></pre>', text, flags = re.DOTALL)
+        text = re.sub(inline_code, r'<code>\1</code>', text)
         
         return text
+    
+    @staticmethod
+    def getHash(data: bytes, hash_type: str = 'md5') -> str:
+        """
+        Hash the given data using the specified hash type.
+        
+        Args:
+            data (bytes): The data to be hashed.
+            hash_type (str): The hash type to be used. Possible values are 'md5', 'sha', 'sha1', 'sha256', and 'sha512'. Default is 'md5'.
+            
+        Returns:
+            str: The hashed data.
+        """
+        match hash_type:
+            case "md5":
+                hsh = hashlib.md5()
+            case "sha" | "sha1":
+                hsh = hashlib.sha1()
+            case "sha256":
+                hsh = hashlib.sha256()
+            case "sha512":
+                hsh = hashlib.sha512()
+            case _:
+                hsh = hashlib.md5()
+        
+        hsh.update(data)
+        return hsh.hexdigest()
+    
+    @staticmethod
+    def getFileHash(file_path: str, hash_type: str = 'md5', buffer: int = 65536) -> str:
+        """
+        Hash the given file using the specified hash type.
+        
+        Args:
+            file_path (str): The path to the file to be hashed.
+            hash_type (str): The hash type to be used. Possible values are 'md5', 'sha', 'sha1', 'sha256', and 'sha512'. Default is 'md5'.
+            buffer (int): The buffer size to be used when reading the file. Default is 65536.
+            
+        Returns:
+            str: The hashed file.
+        """
+        hashed = None
+        with open(file_path, 'rb') as file:
+            while True:
+                data = file.read(buffer)
+                if not data: break
+                hashed = ValkyrieTools.getHash(data, hash_type)
+        return hashed
+    
+    @staticmethod
+    def getFileSize(file_path: str) -> int:
+        """
+        Get the size of the given file.
+        
+        Args:
+            file_path (str): The path to the file to get the size of.
+            
+        Returns:
+            int: The size of the file in bytes.
+        """
+        return os.path.getsize(file_path)
+    
+    @staticmethod
+    def getFileList(path: str) -> list:
+        """
+        Get a list of all files in the given path, including files in sub-directories.
+        
+        Args:
+            path (str): The path to get the file list from.
+            
+        Returns:
+            list: A list of all files in the given path.
+        """
+        file_list = list()
+        for dirs, sub_dirs, files in os.walk(path):
+            if len(files) > 0:
+                for file in files:
+                    filepath = f"{dirs}/{file}".replace('\\', '/')
+                    file_list.append(filepath)
+        return file_list
 
 
 # ===============================
@@ -405,3 +508,4 @@ if __name__ == '__main__':
     
     # markdown to html
     print(f"Markdown to HTML: {ValkyrieTools.markdownHtml('**Hello** *World*!')}")  # Returns <b>Hello</b> <i>World</i>!
+    print(f"Markdown to HTML: {ValkyrieTools.markdownHtml('```*italic* **bold**```')}")  # Returns <pre><code>*italic* **bold**</code></pre>

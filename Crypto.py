@@ -39,11 +39,7 @@ from Cryptodome.Cipher import AES
 AES_GCM = 0
 AES_CTR = 1
 AES_CBC = 2
-MODES = {
-    0: AES_GCM,
-    1: AES_CTR,
-    2: AES_CBC,
-}
+MODES = [AES_GCM, AES_CTR, AES_CBC]
 
 
 # ===============================
