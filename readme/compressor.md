@@ -1,4 +1,4 @@
-## Compressor Module
+## Valkyrie Compressor Module
 
 The Compressor module (`Compressor.py`) provides a utility to compress and decompress data using various compression modes such as gzip, bzip2, lzma, lz4, zstd, and none (no compression). It offers functions to compress and decompress data based on the specified compression mode.
 

@@ -1,4 +1,4 @@
-## Options Module
+## Valkyrie Options Module
 
 The Options module (`Options.py`) provides a configurable command-line option parser using `OptionParser`. It allows easy definition of options with specified data types, help messages, and default values. The parsed options can be accessed through a dictionary-like interface.
 

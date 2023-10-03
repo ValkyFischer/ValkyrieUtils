@@ -12,6 +12,7 @@ Valkyrie Utils is a Python utility library that provides convenient and flexible
   - [Options](#valkyrie-options)
   - [Compressor](#valkyrie-compressor)
   - [Crypto](#valkyrie-crypto)
+  - [Manifest](#valkyrie-manifest)
   - [Tools](#valkyrie-tools)
 - [Example Usage](#example-usage)
 
@@ -30,6 +31,7 @@ To use Valkyrie Utils, you'll need to import the desired module(s) into your Pyt
 - **Options**: Allows you to define and parse command-line options with specified data types and default values.
 - **Compressor**: Provides a utility to compress and decompress data using various compression modes.
 - **Crypto**: Offers functions to encrypt and decrypt data using AES-GCM, AES-CTR, and AES-CBC.
+- **Manifest**: Provides a class to create a Valkyrie Manifest, a JSON file that contains files and their hashes.
 - **Tools**: Provides functions to validate various data types (e.g., float, integer, boolean, list, dictionary).
 
 ## Modules
@@ -56,6 +58,10 @@ The Compressor module (`Compressor.py`) provides a utility to compress and decom
 ### Valkyrie Crypto
 The Crypto module (`Crypto.py`) provides functions to encrypt and decrypt data using AES-GCM, AES-CTR, and AES-CBC with an Argon2 generated encryption key.
 > - Refer to the [Valkyrie Crypto documentation](./readme/crypto.md) for more information.
+
+### Valkyrie Manifest
+The Manifest module (`Manifest.py`) provides a class to create a Valkyrie Manifest, a JSON file that contains files and their hashes. This manifest is crucial for verifying the integrity of a directory of files.
+> - Refer to the [Valkyrie Manifest documentation](./readme/manifest.md) for more information.
 
 ### Valkyrie Tools
 
