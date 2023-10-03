@@ -32,7 +32,7 @@ guidelines and examples. Here's a brief overview of each module:
 - **Options**: Allows you to define and parse command-line options with specified data types and default values.
 - **Compressor**: Provides a utility to compress and decompress data using various compression modes.
 - **Crypto**: Offers functions to encrypt and decrypt data using AES-GCM, AES-CTR, and AES-CBC.
-- **Manifest**: Provides a class to create a Valkyrie Manifest, a JSON file that contains files and their hashes.
+- **Manifest**: Provides a class to create a Valkyrie Manifest, and to download missing or modified files from a remote URL.
 - **Tools**: Provides various functions such as data validation, data type matching, code generation, and more.
 
 ## Modules
@@ -61,7 +61,7 @@ The Crypto module (`Crypto.py`) provides functions to encrypt and decrypt data u
 > - Refer to the [Valkyrie Crypto documentation](./readme/crypto.md) for more information.
 
 ### Valkyrie Manifest
-The Manifest module (`Manifest.py`) provides a class to create a Valkyrie Manifest, a JSON file that contains files and their hashes. This manifest is crucial for verifying the integrity of a directory of files.
+The Manifest module (`Manifest.py`) provides a class to create a Valkyrie Manifest, a JSON file that contains files and their hashes. This manifest is crucial for verifying the integrity of a directory of files, and to download missing or modified files from a remote URL.
 > - Refer to the [Valkyrie Manifest documentation](./readme/manifest.md) for more information.
 
 ### Valkyrie Tools
