@@ -17,19 +17,19 @@ from Logger import ValkyrieLogger
 log = ValkyrieLogger('info', '.\\log\\logger.log', 'ValkyrieLogger', True)
 
 # Log various messages
-log.Info(1, 1, 'val1,%s,val2,%s' % (10, 20))
-log.Info(1, 2, 'val1', 10, 'val2', 20)
-log.Info('# This is a test message')
+log.info(1, 1, 'val1,%s,val2,%s' % (10, 20))
+log.info(1, 2, 'val1', 10, 'val2', 20)
+log.info('# This is a test message')
 
-log.Debug(1, 1, val1=10, val2=20)
-log.Error('# This is an error message', val1=10, val2=20)
+log.debug(1, 1, val1 = 10, val2 = 20)
+log.error('# This is an error message', val1 = 10, val2 = 20)
 
 # Log to the console
-log.Console('info', '# This is an info message')
-log.Console('debug', '# This is a debug message')
+log.console('info', '# This is an info message')
+log.console('debug', '# This is a debug message')
 
 # Log an error to the console
-log.ConsoleError('# This is an error message')
+log.consoleError('# This is an error message')
 ```
 
 In this example, we create a logger with the `info` log level, directing log messages to both a log file and the 

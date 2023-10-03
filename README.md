@@ -82,14 +82,13 @@ from Options import ValkyrieOptions
 from Compressor import ValkyrieCompressor
 from Crypto import ValkyrieCrypto, AES_GCM
 
-
 # Create a new logger instance
 logger = ValkyrieLogger('debug', 'logs/logger.log', 'ValkyrieUtils', True)
-logger.Info('Loading a new Valkyrie Logger instance')
+logger.info('Loading a new Valkyrie Logger instance')
 
 # Initialize the command line options
 parser = ValkyrieOptions([
-    ('config_file', 'str', 'Configuration File Path and filename', 'examples/example.ini'),
+  ('config_file', 'str', 'Configuration File Path and filename', 'examples/example.ini'),
 ])
 options = parser.parse()
 ext = options.config_file.split('.')[-1]

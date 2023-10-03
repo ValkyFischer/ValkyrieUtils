@@ -97,10 +97,10 @@ def run_test(debug):
     
     # Create a new logger instance
     logger = ValkyrieLogger('debug' if debug else 'info', 'logs/logger.log', 'ValkyrieUtils', True, debug)
-    logger.Info('Loading a new Valkyrie Utils instance')
+    logger.info('Loading a new Valkyrie Utils instance')
     
     # line
-    logger.Info('-'*90)
+    logger.info('-' * 90)
     
     # Initialize the command line options
     parser = ValkyrieOptions([
@@ -108,75 +108,75 @@ def run_test(debug):
     ])
     options = parser.parse()
     ext = options.config_file.split('.')[-1]
-    logger.Info('Initialized the command line options')
-    if debug: logger.Debug(f'Options: {options}')
+    logger.info('Initialized the command line options')
+    if debug: logger.debug(f'Options: {options}')
     
     # Read the configuration file
     config = ValkyrieConfig(f'examples/example.{ext}')
-    logger.Info(f'Read example.{ext}')
+    logger.info(f'Read example.{ext}')
 
     # Get the complete configuration as a dictionary
     config_dict = ValkyrieTools.matchDict(config.get_config())
-    logger.Info(f'Convert complete configuration to a dictionary')
-    if debug: logger.Debug(f'Dict: {config_dict}')
+    logger.info(f'Convert complete configuration to a dictionary')
+    if debug: logger.debug(f'Dict: {config_dict}')
     
     # Get the configuration nodes as a dictionary
     config_dict_1 = ValkyrieTools.matchDict(config.get_dict("Test1"))
     config_dict_2 = ValkyrieTools.matchDict(config.get_dict("Test2"))
-    logger.Info('Convert the configurations to a dictionary')
-    if debug: logger.Debug(f'Dict: {config_dict_1}')
-    if debug: logger.Debug(f'Dict: {config_dict_2}')
+    logger.info('Convert the configurations to a dictionary')
+    if debug: logger.debug(f'Dict: {config_dict_1}')
+    if debug: logger.debug(f'Dict: {config_dict_2}')
     
     # Save the complete configuration to a new file
     save_config_data(config_dict, f'examples/out/Complete_{ext}.conf')
-    logger.Info(f'Save the complete "{ext}" configuration to a new file')
-    if debug: logger.Debug(f'File: examples/out/Complete_{ext}.conf')
+    logger.info(f'Save the complete "{ext}" configuration to a new file')
+    if debug: logger.debug(f'File: examples/out/Complete_{ext}.conf')
     
     # Save the configuration to a new file
     save_config_data(config_dict_1, f'examples/out/Test1_{ext}.conf')
     save_config_data(config_dict_2, f'examples/out/Test2_{ext}.conf')
-    logger.Info(f'Save the "{ext}" configuration to a new files')
-    if debug: logger.Debug(f'File: examples/out/Test1_{ext}.conf')
-    if debug: logger.Debug(f'File: examples/out/Test2_{ext}.conf')
+    logger.info(f'Save the "{ext}" configuration to a new files')
+    if debug: logger.debug(f'File: examples/out/Test1_{ext}.conf')
+    if debug: logger.debug(f'File: examples/out/Test2_{ext}.conf')
     
     # Compress the configuration data
     compressed_config = ValkyrieCompressor.deflate(pickle.dumps(config_dict), 'zstd')
-    logger.Info(f'Compress the configuration the data')
-    if debug: logger.Debug(f'Compressed Data: {compressed_config}')
+    logger.info(f'Compress the configuration the data')
+    if debug: logger.debug(f'Compressed Data: {compressed_config}')
     
     # Create a new argon encryption key
     _key = ValkyrieTools.generateCode(64)
     _iv = ValkyrieTools.generateCode(24)
     argon_key = ValkyrieCrypto.generate_argon_key(_key, _iv)
-    logger.Info(f'Create a new argon encryption key')
-    if debug: logger.Debug(f'Crypto Key: {_key}')
-    if debug: logger.Debug(f'Crypto IV: {_iv}')
-    if debug: logger.Debug(f'Argon Key: {argon_key}')
+    logger.info(f'Create a new argon encryption key')
+    if debug: logger.debug(f'Crypto Key: {_key}')
+    if debug: logger.debug(f'Crypto IV: {_iv}')
+    if debug: logger.debug(f'Argon Key: {argon_key}')
     
     # Encrypt the compressed configuration data
     encrypted_config = ValkyrieCrypto.encrypt_data(argon_key, compressed_config, AES_GCM)
-    logger.Info(f'Encrypt the compressed configuration data')
-    if debug: logger.Debug(f'Encrypted Data: {encrypted_config}')
+    logger.info(f'Encrypt the compressed configuration data')
+    if debug: logger.debug(f'Encrypted Data: {encrypted_config}')
     
     # Decrypt the ciphertext
     decryption_config = ValkyrieCrypto.decrypt_data(argon_key, encrypted_config, AES_GCM)
-    logger.Info(f'Decrypt the compressed configuration data')
-    if debug: logger.Debug(f'Decrypted Data: {decryption_config}')
+    logger.info(f'Decrypt the compressed configuration data')
+    if debug: logger.debug(f'Decrypted Data: {decryption_config}')
     
     # Decompress the configuration data
     decompressed_config = pickle.loads(ValkyrieCompressor.inflate(decryption_config, 'zstd'))
-    logger.Info(f'Decompress the configuration the data')
-    if debug: logger.Debug(f'Decompressed Data: {decompressed_config}')
+    logger.info(f'Decompress the configuration the data')
+    if debug: logger.debug(f'Decompressed Data: {decompressed_config}')
     
     # print debug data
-    if debug: logger.Info('-'*90)
-    if debug: logger.Debug(f'Compressed Size   : {ValkyrieTools.formatSize(len(compressed_config))}')
-    if debug: logger.Debug(f'Decompressed Size : {ValkyrieTools.formatSize(len(pickle.dumps(decompressed_config)))}')
-    if debug: logger.Debug(f'Encrypted Size    : {ValkyrieTools.formatSize(len(pickle.dumps(encrypted_config)))}')
-    if debug: logger.Debug(f'Decrypted Size    : {ValkyrieTools.formatSize(len(decryption_config))}')
+    if debug: logger.info('-' * 90)
+    if debug: logger.debug(f'Compressed Size   : {ValkyrieTools.formatSize(len(compressed_config))}')
+    if debug: logger.debug(f'Decompressed Size : {ValkyrieTools.formatSize(len(pickle.dumps(decompressed_config)))}')
+    if debug: logger.debug(f'Encrypted Size    : {ValkyrieTools.formatSize(len(pickle.dumps(encrypted_config)))}')
+    if debug: logger.debug(f'Decrypted Size    : {ValkyrieTools.formatSize(len(decryption_config))}')
     
     # line
-    logger.Info('-'*90)
+    logger.info('-' * 90)
 
 
 # ===============================

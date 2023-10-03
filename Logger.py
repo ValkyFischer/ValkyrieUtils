@@ -16,11 +16,11 @@ About:
 
 Example:
     >>> log = ValkyrieLogger('info', '.\\log\\logger.log', 'ValkyrieLogger', True)
-    >>> log.Info(1, 1, 'val1,%s,val2,%s' % (10, 20))
+    >>> log.info(1, 1, 'val1,%s,val2,%s' % (10, 20))
     2021-10-01 00:00:00,000 | INFO    | ValkyrieLogger | ValkyrieLogger.py | 1 | 1 | val1,10,val2,20
-    >>> log.Info(1, 2, 'val1', 10, 'val2', 20)
+    >>> log.info(1, 2, 'val1', 10, 'val2', 20)
     2021-10-01 00:00:00,000 | INFO    | ValkyrieLogger | ValkyrieLogger.py | 1 | 2 | val1 | 10 | val2 | 20
-    >>> log.Error('# This is a test message')
+    >>> log.error('# This is a test message')
     2021-10-01 00:00:00,000 | ERROR   | ValkyrieLogger | ValkyrieLogger.py | # This is a test message :: Traceback (most recent call last):
         File "ValkyrieLogger.py", line 123, in <module>
             log.Error('# This is a test message')
@@ -71,7 +71,7 @@ class ValkyrieLogger:
         self.ConsoleLogger = self.GetConsoleLogger(appName + '_Console', False)
         self.ConsoleErrLogger = self.GetConsoleLogger(appName + '_ConsoleErr', True)
         self.useInspect = useInspect
-        if debug: self.Info("Started a new Valkyrie Logger instance")
+        if debug: self.info("Started a new Valkyrie Logger instance")
     
     @staticmethod
     def _ConvertUnicode(param):
@@ -178,7 +178,7 @@ class ValkyrieLogger:
         
         return retMsg + addStr
     
-    def Info(self, *strMsg, **kwStrMsg):
+    def info(self, *strMsg, **kwStrMsg):
         """
         Write a log message at the info level.
 
@@ -198,7 +198,7 @@ class ValkyrieLogger:
             if self.PATH is not None:
                 self.ConsoleLogger.info(message)
     
-    def Debug(self, *strMsg, **kwStrMsg):
+    def debug(self, *strMsg, **kwStrMsg):
         """
         Write a log message at the debug level.
 
@@ -218,7 +218,7 @@ class ValkyrieLogger:
             if self.PATH is not None:
                 self.ConsoleLogger.debug(message)
     
-    def Error(self, *strMsg, **kwStrMsg):
+    def error(self, *strMsg, **kwStrMsg):
         """
         Write a log message at the error level.
 
@@ -242,7 +242,7 @@ class ValkyrieLogger:
             if self.PATH is not None:
                 self.ConsoleErrLogger.error(message)
     
-    def Console(self, level, *strMsg, **kwStrMsg):
+    def console(self, level, *strMsg, **kwStrMsg):
         """
         Write a console log message.
 
@@ -260,7 +260,7 @@ class ValkyrieLogger:
         if not self.IsConsoleOnly:
             self.Logger.log(logLevel, self.ProcessMsg(strMsg, kwStrMsg))
     
-    def ConsoleError(self, *strMsg, **kwStrMsg):
+    def consoleError(self, *strMsg, **kwStrMsg):
         """
         Write a console error log message.
 
@@ -353,26 +353,26 @@ class ColorfulFormatter(logging.Formatter):
 if __name__ == '__main__':
     # With inspection
     log = ValkyrieLogger('info', useInspect = True)
-    log.Info(1, 1, 'val1,%s,val2,%s' % (10, 20))
-    log.Info(1, 2, 'val1', 10, 'val2', 20)
-    log.Info('# This is a test message')
+    log.info(1, 1, 'val1,%s,val2,%s' % (10, 20))
+    log.info(1, 2, 'val1', 10, 'val2', 20)
+    log.info('# This is a test message')
     
-    log.Debug(1, 1, val1 = 10, val2 = 20)
-    log.Error('# This is a error message', val1 = 10, val2 = 20)
+    log.debug(1, 1, val1 = 10, val2 = 20)
+    log.error('# This is a error message', val1 = 10, val2 = 20)
     
-    log.Console('info', '# This is a info message')
-    log.Console('debug', '# This is a debug message')
-    log.ConsoleError('# This is a error message')
+    log.console('info', '# This is a info message')
+    log.console('debug', '# This is a debug message')
+    log.consoleError('# This is a error message')
     
     # Without inspection
     log = ValkyrieLogger('debug', appName = 'ValkyrieLogger', useInspect = False)
-    log.Info(1, 1, 'val1,%s,val2,%s' % (10, 20))
-    log.Info(1, 2, 'val1', 10, 'val2', 20)
-    log.Info('# This is a test message')
+    log.info(1, 1, 'val1,%s,val2,%s' % (10, 20))
+    log.info(1, 2, 'val1', 10, 'val2', 20)
+    log.info('# This is a test message')
     
-    log.Debug(1, 1, val1 = 10, val2 = 20)
-    log.Error('# This is a error message', val1 = 10, val2 = 20)
+    log.debug(1, 1, val1 = 10, val2 = 20)
+    log.error('# This is a error message', val1 = 10, val2 = 20)
     
-    log.Console('info', '# This is a info message')
-    log.Console('debug', '# This is a debug message')
-    log.ConsoleError('# This is a error message')
+    log.console('info', '# This is a info message')
+    log.console('debug', '# This is a debug message')
+    log.consoleError('# This is a error message')
