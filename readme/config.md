@@ -1,6 +1,6 @@
 ## Valkyrie Config Module
 
-The Config module (`Config.py`) provides a versatile configuration reader for INI and XML files. It allows users to easily read and retrieve configuration values from these file formats. The supported operations include fetching values as strings, integers, floats, booleans, and dictionaries, allowing for flexible usage based on the configuration file type.
+The Config module (`Config.py`) provides a versatile configuration reader for INI, XML and JSON files. It allows users to easily read and retrieve configuration values from these file formats. The supported operations include fetching values as strings, integers, floats, booleans, and dictionaries, allowing for flexible usage based on the configuration file type.
 
 ### Usage
 
@@ -37,18 +37,19 @@ print(config_json.get_int("Test2", "value"))     # 3000
 print(config_json.get_config())
 ```
 
-In this example, we demonstrate how to read configuration values from both INI and XML files using the Config module.
+In this example, we demonstrate how to read configuration values from `INI`, `XML` and `JSON` files using the Config module.
 
-### Supported Operations
-
-- `get_string(section, key, default=None)`: Get a string value from the configuration.
-- `get_int(section, key, default=None)`: Get an integer value from the configuration.
-- `get_boolean(section, key, default=None)`: Get a boolean value from the configuration.
-- `get_float(section, key, default=None)`: Get a float value from the configuration.
-- `get_value(node, default=None)`: Get a value from the configuration. XML only.
-- `get_dict(section)`: Get a full section as a dictionary from the configuration.
-- `get_config()`: Get the complete configuration as a dictionary.
-- `save(config, file=None)`: Save the configuration to a file.
+### Supported Classes and Functions
+- `ValkyrieConfig`: A class to read configuration from INI, XML and JSON files.
+    - `__init__(file)`: Initialize a configuration reader instance.
+    - `get_string(section, key, default=None)`: Get a string value from the configuration.
+    - `get_int(section, key, default=None)`: Get an integer value from the configuration.
+    - `get_boolean(section, key, default=None)`: Get a boolean value from the configuration.
+    - `get_float(section, key, default=None)`: Get a float value from the configuration.
+    - `get_value(node, default=None)`: Get a value from the configuration. XML only.
+    - `get_dict(section)`: Get a full section as a dictionary from the configuration.
+    - `get_config()`: Get the complete configuration as a dictionary.
+    - `save(config, file=None)`: Save the configuration to a file.
 
 ### File Formats
 

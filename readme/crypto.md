@@ -33,6 +33,9 @@ decryption_data = ValkyrieCrypto.decrypt_data(encryption_key, encryption_data)
 print('Decrypted data:', decryption_data)
 ```
 
+In this example, we demonstrate how to use the Crypto module to encrypt and decrypt data using `AES-GCM`. We also 
+showcase the ability to generate an argon key using Argon2.
+
 ### Supported Classes and Functions
 
 - `ValkyrieCrypto`: A class to encrypt and decrypt data using AES-GCM, AES-CTR, and AES-CBC.

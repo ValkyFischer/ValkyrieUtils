@@ -41,6 +41,9 @@ MC.full = True
 MC.createManifest()
 ```
 
+In this example, we create a basic manifest for the directory in `C:\Temp` and save it to the `examples/out` directory. We then
+create a manifest with full data and save it to the same directory.
+
 ### Supported Classes and Functions
 
 - `ValkyrieManifest`: A class to create a manifest of files in a directory.

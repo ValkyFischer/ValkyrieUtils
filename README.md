@@ -24,15 +24,16 @@ data compression, data encryption, and data validation.
 
 ## Usage
 
-To use Valkyrie Utils, you'll need to import the desired module(s) into your Python script and follow the provided guidelines and examples. Here's a brief overview of each module:
+To use Valkyrie Utils, you'll need to import the desired module(s) into your Python script and follow the provided 
+guidelines and examples. Here's a brief overview of each module:
 
 - **Logger**: Facilitates easy logging with configurable log levels and file handling.
-- **Config**: Enables easy reading and parsing of configuration files (both INI and XML).
+- **Config**: Enables easy reading and parsing of configuration files (INI, XML and JSON).
 - **Options**: Allows you to define and parse command-line options with specified data types and default values.
 - **Compressor**: Provides a utility to compress and decompress data using various compression modes.
 - **Crypto**: Offers functions to encrypt and decrypt data using AES-GCM, AES-CTR, and AES-CBC.
 - **Manifest**: Provides a class to create a Valkyrie Manifest, a JSON file that contains files and their hashes.
-- **Tools**: Provides functions to validate various data types (e.g., float, integer, boolean, list, dictionary).
+- **Tools**: Provides various functions such as data validation, data type matching, code generation, and more.
 
 ## Modules
 
@@ -48,15 +49,15 @@ The Config module (`Config.py`) facilitates reading and parsing configuration fi
 
 ### Valkyrie Options
 
-The Options module (`Options.py`) helps manage command-line options by allowing easy definition of options with specified data types, help messages, and default values.
+The Options module (`Options.py`) helps manage command-line options by allowing easy definition of options with specified data types, help messages, and default values. The parsed options can be accessed through a dictionary-like interface.
 > - Refer to the [Valkyrie Options documentation](./readme/options.md) for more information.
 
 ### Valkyrie Compressor
-The Compressor module (`Compressor.py`) provides a utility to compress and decompress data using various compression modes such as gzip, bzip2, lzma, lz4, zstd, and none (no compression).
+The Compressor module (`Compressor.py`) provides a utility to compress and decompress data using various compression modes, ranging from fast compression with low file size reduction to slow compression with high file size reduction.
 > - Refer to the [Valkyrie Compressor documentation](./readme/compressor.md) for more information.
 
 ### Valkyrie Crypto
-The Crypto module (`Crypto.py`) provides functions to encrypt and decrypt data using AES-GCM, AES-CTR, and AES-CBC with an Argon2 generated encryption key.
+The Crypto module (`Crypto.py`) provides functions to encrypt and decrypt data using AES-GCM, AES-CTR, and AES-CBC with an Argon2 generated encryption key, which is derived from a user-provided key and initialization vector.
 > - Refer to the [Valkyrie Crypto documentation](./readme/crypto.md) for more information.
 
 ### Valkyrie Manifest
@@ -65,7 +66,7 @@ The Manifest module (`Manifest.py`) provides a class to create a Valkyrie Manife
 
 ### Valkyrie Tools
 
-The Tools module (`Tools.py`) offers functions to validate different data types, such as float, integer, boolean, list, and dictionary; including a function to match dictionary values to their appropriate data types.
+The Tools module (`Tools.py`) offers functions to facilitate common tasks such as data validation, data type matching, code generation, and more, making it a useful utility module.
 > - Refer to the [Valkyrie Tools documentation](./readme/tools.md) for more information.
 
 ## Example Usage

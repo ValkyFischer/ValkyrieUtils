@@ -33,7 +33,9 @@ print(parsed_options.keys(), parsed_options)
 print(parsed_options['server_id'])
 print(parsed_options.config_file)
 ```
-In this example, we define two options, `server_id` and `config_file`, with specified data types, help messages, and default values. We then parse the command-line arguments and access the parsed options through a dictionary-like interface.
+In this example, we define two options, `server_id` and `config_file`, with specified data types, help messages, and 
+default values. We then parse the command-line arguments and access the parsed options through a dictionary-like 
+interface.
 
 ### Supported Classes and Functions
 

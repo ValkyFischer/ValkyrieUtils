@@ -32,9 +32,20 @@ log.Console('debug', '# This is a debug message')
 log.ConsoleError('# This is an error message')
 ```
 
-In this example, we create a logger with the `info` log level, directing log messages to both a log file and the console. We then log various messages using different log functions.
+In this example, we create a logger with the `info` log level, directing log messages to both a log file and the 
+console. We then log various messages using different log functions.
 
-### Log Levels
+### Supported Classes and Functions
+
+- `ValkyrieLogger`: A class to create a logger instance.
+    - `__init__(log_level='info', log_file=None, app_name=None, debug_mode=False)`: Initialize a logger instance.
+    - `Info(*args, **kwargs)`: Log an info message.
+    - `Debug(*args, **kwargs)`: Log a debug message.
+    - `Error(*args, **kwargs)`: Log an error message.
+    - `Console(msg_type, *args, **kwargs)`: Log a message to the console.
+    - `ConsoleError(*args, **kwargs)`: Log an error message to the console.
+
+### Supported Log Levels
 
 - `DEBUG`: Detailed information, typically useful for debugging.
 - `INFO`: Informational messages regarding the progress of the application.
