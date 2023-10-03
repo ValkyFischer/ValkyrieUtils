@@ -39,6 +39,7 @@ import os
 import re
 import secrets
 import string
+import time
 
 
 # ===============================
@@ -441,6 +442,20 @@ class ValkyrieTools:
             int: The size of the file in bytes.
         """
         return os.path.getsize(file_path)
+    
+    @staticmethod
+    def getFileDate(file_path: str) -> str:
+        """
+        Get the date of the given file.
+        
+        Args:
+            file_path (str): The path to the file to get the date of.
+            
+        Returns:
+            str: The date of the file.
+        """
+        modified = os.path.getmtime(file_path)
+        return time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(modified))
     
     @staticmethod
     def getFileList(path: str) -> list:
