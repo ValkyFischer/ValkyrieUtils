@@ -145,6 +145,8 @@ class ValkyrieTools:
             bool: True if the input is a JSON string, False otherwise.
         """
         try:
+            if obj == "null":
+                return False
             json.loads(obj)
             return True
         except json.JSONDecodeError:
