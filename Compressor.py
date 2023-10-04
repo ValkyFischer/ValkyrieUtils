@@ -106,6 +106,11 @@ class ValkyrieCompressor:
 
 
 if __name__ == '__main__':
+
+    # ================================
+    print("-" * 50)
+    # ================================
+    
     # Run a test: zstd
     sample_data = b"Sample data to be compressed"
     sample_compressed = ValkyrieCompressor.deflate(sample_data, 'zstd')
@@ -115,3 +120,7 @@ if __name__ == '__main__':
     print(f"Original data     : {sample_data}")
     print(f"Compressed data   : {sample_compressed}")
     print(f"Decompressed data : {sample_decompressed}")
+
+    # ================================
+    print("-" * 50)
+    # ================================

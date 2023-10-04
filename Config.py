@@ -7,10 +7,11 @@ Created on Oct 01, 2023
 --------
 
 About:
-    This module provides a versatile configuration reader for INI and XML files.
+    This module provides a versatile configuration reader for INI, XML, JSON and VCF files.
     It allows users to easily read and retrieve configuration values from these file formats.
     The supported operations include fetching values as strings, integers, floats, booleans,
     and dictionaries, allowing for flexible usage based on the configuration file type.
+    VCF files are encrypted using Argon2 and AES-GCM.
 --------
 
 Example:
@@ -79,9 +80,14 @@ Samples:
 
 import configparser
 import json
+import logging
+import pickle
 import xml.dom.minidom
 import os
 from collections import OrderedDict
+
+from Crypto import ValkyrieCrypto, AES_GCM
+from Tools import ValkyrieTools
 
 
 # ===============================
@@ -93,24 +99,35 @@ class ValkyrieConfig:
 
     Args:
         absolute_path_and_file (str): The absolute path to the configuration file.
-            Supported file extensions: .ini, .xml, .json
-
-    Raises:
-        ValueError: If the file format is unsupported.
+            Supported file extensions: .ini, .xml, .json, .vcf
     """
-    def __init__(self, absolute_path_and_file):
+    def __init__(self, absolute_path_and_file, logger: logging.Logger = False, debug: bool = False):
         self.path = absolute_path_and_file
+        self.debug = debug
+        self.logger = logger
+        if not self.logger:
+            self.logger = logging.getLogger("ValkyriePackage")
+            self.logger.setLevel(logging.DEBUG if debug else logging.INFO)
+            self.logger.addHandler(logging.StreamHandler())
+        self.encrypt = False
+        self.ext: str
+        self.config_handler: IniReader | XmlReader | JsonReader | CryptoReader
+        self._detect()
+    
+    def _detect(self):
         _, extension = os.path.splitext(self.path)
-        
         if extension.lower() == '.ini':
             self.ext = 'ini'
-            self.config_handler = ValkyrieIniReader(self.path)
+            self.config_handler = IniReader(self.path)
         elif extension.lower() == '.xml':
             self.ext = 'xml'
-            self.config_handler = ValkyrieXmlReader(self.path)
+            self.config_handler = XmlReader(self.path)
         elif extension.lower() == '.json':
             self.ext = 'json'
-            self.config_handler = ValkyrieJsonReader(self.path)
+            self.config_handler = JsonReader(self.path)
+        elif extension.lower() == '.vcf':
+            self.ext = 'vcf'
+            self.config_handler = CryptoReader(self.path)
         else:
             raise ValueError("Unsupported file format: {}".format(extension))
     
@@ -222,7 +239,9 @@ class ValkyrieConfig:
             dict: An ordered dictionary of key-value pairs.
         """
         config_dict = {}
-        if self.ext == 'ini':
+        if self.ext == 'vcf':
+            return self.config_handler.json_doc
+        elif self.ext == 'ini':
             config_node = self.config_handler.cp
             for section in config_node.sections():
                 config_dict[section] = self.get_dict(section)
@@ -243,15 +262,17 @@ class ValkyrieConfig:
         Save the configuration data to a file.
         
         Args:
-            file (str): The file to save the configuration data to.
             config_dict (dict): The configuration data to save.
+            file (str): The file to save the configuration data to.
             
         Returns:
             None
         """
         if file is None:
             file = self.path
-        if self.ext == 'ini' or self.ext == 'xml' or self.ext == 'json':
+        if self.encrypt:
+            self.config_handler = CryptoReader(file)
+        if self.ext == 'ini' or self.ext == 'xml' or self.ext == 'json' or self.ext == 'vcf':
             self.config_handler.save(config_dict, file)
         else:
             raise ValueError("Unsupported file format: {}".format(self.ext))
@@ -260,7 +281,7 @@ class ValkyrieConfig:
 # ===============================
 
 
-class ValkyrieIniReader:
+class IniReader:
     """
     Initialize a ValkyrieIni instance.
 
@@ -308,7 +329,7 @@ class ValkyrieIniReader:
             raise Exception(f"Failed to save configuration data to file: {e}")
 
 
-class ValkyrieXmlReader:
+class XmlReader:
     """
     Initialize a ValkyrieXml instance.
 
@@ -371,16 +392,26 @@ class ValkyrieXmlReader:
             raise Exception(f"Failed to save configuration data to file: {e}")
         
 
-class ValkyrieJsonReader:
+class JsonReader:
     """
     Initialize a ValkyrieJson instance.
 
     Args:
         absolute_path_and_file (str): The absolute path to the JSON configuration file.
     """
-    def __init__(self, absolute_path_and_file):
+    def __init__(self, absolute_path_and_file: str):
         self.path = absolute_path_and_file
-        self.json_doc = json.load(open(self.path))
+        self.json_doc = self.__read__()
+
+    def __read__(self):
+        """
+        Read the JSON configuration file and return the parsed data.
+
+        Returns:
+            dict: The parsed configuration data.
+        """
+        with open(self.path) as file:
+            return json.load(file)
     
     def get_value(self, node, default):
         raise NotImplementedError("This method is not supported for JSON files.")
@@ -414,12 +445,74 @@ class ValkyrieJsonReader:
             raise Exception(f"Failed to save configuration data to file: {e}")
 
 
+class CryptoReader(JsonReader):
+    """
+    Initialize a CryptoReader instance for reading and writing encrypted configuration files.
+
+    Args:
+        absolute_path_and_file (str): The absolute path to the encrypted configuration file.
+    """
+    def __init__(self, absolute_path_and_file: str):
+        super().__init__(absolute_path_and_file)
+        self.argon_key: bytes = None
+        
+    def __read__(self):
+        """
+        Read encrypted configuration file and return the parsed data.
+        
+        Returns:
+            dict: The decrypted configuration data.
+        """
+        if os.path.exists(self.path):
+            with open(self.path) as file:
+                data = file.read()
+        
+            if not data:
+                raise Exception("Cannot read config!")
+            
+            if self.argon_key is None:
+                self.argon_key = ValkyrieCrypto.__key__()
+            
+            encrypted_data = json.loads(data)
+            decrypted_data = ValkyrieCrypto.decrypt_data(self.argon_key, encrypted_data, AES_GCM)
+            config = pickle.loads(decrypted_data)
+            
+        else:
+            config = {}
+            
+        return config
+    
+    def save(self, config_dict, file = None):
+        """
+        Save the data in an encrypted configuration file.
+        
+        Args:
+            config_dict (dict): The configuration data to save.
+            file (str): The file to save the configuration data to.
+        """
+        if file is None:
+            file = self.path
+            
+        if self.argon_key is None:
+            self.argon_key = ValkyrieCrypto.__key__()
+            
+        pickled_data = pickle.dumps(config_dict)
+        encrypted_data = ValkyrieCrypto.encrypt_data(self.argon_key, pickled_data, AES_GCM)
+        
+        with open(file, "w") as f:
+            f.write(json.dumps(encrypted_data, indent = 4))
+            
+        self.__init__(file)
+
+
 # ===============================
 
 
 if __name__ == '__main__':
     print("Running a test for ValkyrieConfig...")
-    print("-"*80)
+    # ================================
+    print("-" * 50)
+    # ================================
     
     # INI file example
     config_reader_ini = ValkyrieConfig("examples/example.ini")
@@ -430,7 +523,9 @@ if __name__ == '__main__':
     print(config_reader_ini.get_dict('Test2'))  # returns dict
     print(config_reader_ini.get_config())  # returns dict
     
-    print("-" * 80)
+    # ================================
+    print("-" * 50)
+    # ================================
     
     # XML file example
     config_reader_xml = ValkyrieConfig("examples/example.xml")
@@ -442,21 +537,57 @@ if __name__ == '__main__':
     print(config_reader_xml.get_dict("Test2"))  # returns dict
     print(config_reader_xml.get_config())  # returns dict
     
-    print("-" * 80)
+    # ================================
+    print("-" * 50)
+    # ================================
     
     # JSON file example
-    config_reader_json = ValkyrieConfig("examples/example.json")
-    print(f"File: {config_reader_json.path}")
-    print(config_reader_json.get_string("Test1", "value"))  # returns string
-    print(config_reader_json.get_int("Test2", "value"))  # returns int
-    print(config_reader_json.get_dict("Test1"))  # returns dict
-    print(config_reader_json.get_dict("Test2"))  # returns dict
-    print(config_reader_json.get_config())  # returns dict
+    config_reader = ValkyrieConfig("examples/example.json")
+    print(f"File: {config_reader.path}")
+    print(config_reader.get_string("Test1", "value"))  # returns string
+    print(config_reader.get_int("Test2", "value"))  # returns int
+    print(config_reader.get_dict("Test1"))  # returns dict
+    print(config_reader.get_dict("Test2"))  # returns dict
+    print(config_reader.get_config())  # returns dict
     
-    print("-" * 80)
+    # ================================
+    print("-" * 50)
+    # ================================
     
     # Save the configuration data to a file
     config_reader_ini.save(config_reader_ini.get_config(), "examples/out/example.ini")
+    print(f"File saved: {config_reader_ini.path}")
     config_reader_xml.save(config_reader_xml.get_config(), "examples/out/example.xml")
-    config_reader_json.save(config_reader_json.get_config(), "examples/out/example.json")
+    print(f"File saved: {config_reader_xml.path}")
+    config_reader.save(config_reader.get_config(), "examples/out/example.json")
+    print(f"File saved: {config_reader.path}")
+    
+    # Add new configuration data
+    cfg = config_reader.get_config()
+    cfg['Test1']['value'] = "test_key_crypto"
+    cfg['Test1']['version'] = "test_0.4"
+    cfg['Test2']['value'] = 4000
+    cfg['Test2']['name'] = "test_crypto"
+    # Save the configuration data to an encrypted file
+    config_reader.encrypt = True
+    config_reader.path = "examples/out/example.vcf"
+    config_reader.save(config_reader.get_config())
+    print(f"File saved: {config_reader.path}")
+    
+    # ================================
+    print("-" * 50)
+    # ================================
+    
+    # Read the encrypted configuration file
+    config_reader = ValkyrieConfig("examples/out/example.vcf")
+    print(f"File: {config_reader.path}")
+    print(config_reader.get_string("Test1", "value"))  # returns string
+    print(config_reader.get_int("Test2", "value"))  # returns int
+    print(config_reader.get_dict("Test1"))  # returns dict
+    print(config_reader.get_dict("Test2"))  # returns dict
+    print(config_reader.get_config())  # returns dict
+    
+    # ================================
+    print("-" * 50)
+    # ================================
     

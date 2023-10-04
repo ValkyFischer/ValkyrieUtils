@@ -83,8 +83,6 @@ class ValkyrieManifest:
         # Create a manifest with full data and update it with the files to update
         >>> VM.updateManifest(local_manifest, files_to_update)
         
-        
-        
     """
     def __init__(self, directory: str | tuple[str, str],  save_as: tuple[str, str] = False, full: bool = False, logger: logging.Logger = False, debug: bool = False):
         self.start = time.time()
@@ -341,7 +339,7 @@ class ValkyrieManifest:
                 key_name = file_path
             
             if self.full:
-                hashes[key_name] = [ValkyrieTools.getFileHash(file_path, "md5"), ValkyrieTools.getFileSize(file_path), ValkyrieTools.getFileDate(file_path)]
+                hashes[key_name] = [ValkyrieTools.getFileHash(file_path, "md5"), ValkyrieTools.getFileSize(file_path), ValkyrieTools.getFileEdit(file_path)]
             else:
                 hashes[key_name] = ValkyrieTools.getFileHash(file_path, "md5")
         return hashes
@@ -414,6 +412,10 @@ class ValkyrieManifest:
 
 
 if __name__ == "__main__":
+    # ================================
+    print("-" * 50)
+    # ================================
+    
     # Set the app paths
     app_dir = r".\examples\download\ARIA"
     app_replace = r"ARIA"
@@ -451,3 +453,7 @@ if __name__ == "__main__":
     
     # Save the manifest
     VM.saveManifest(_new_manifest)
+
+    # ================================
+    print("-" * 50)
+    # ================================

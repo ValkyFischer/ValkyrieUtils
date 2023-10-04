@@ -148,6 +148,10 @@ class CmdOptions(dict):
 
 
 if __name__ == '__main__':
+    # ================================
+    print("-" * 50)
+    # ================================
+    
     # Add options on the fly while initializing
     options_parser = ValkyrieOptions([
         ('server_id',   'int', 'Server ID'),
@@ -188,3 +192,7 @@ if __name__ == '__main__':
     print(parsed_options.keys(), parsed_options)
     print(parsed_options['server_id'])
     print(parsed_options.config_file)
+
+    # ================================
+    print("-" * 50)
+    # ================================

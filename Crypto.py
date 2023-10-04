@@ -31,6 +31,7 @@ Example:
 
 import argon2
 from Cryptodome.Cipher import AES
+from Tools import ValkyrieTools
 
 
 # ===============================
@@ -39,7 +40,8 @@ from Cryptodome.Cipher import AES
 AES_GCM = 0
 AES_CTR = 1
 AES_CBC = 2
-MODES = [AES_GCM, AES_CTR, AES_CBC]
+MODES_L = [AES_GCM, AES_CTR, AES_CBC]
+MODES_D = {'AES-GCM': AES_GCM, 'AES-CTR': AES_CTR, 'AES-CBC': AES_CBC}
 
 
 # ===============================
@@ -61,6 +63,18 @@ class ValkyrieCrypto:
         >>> encrypted_data = ValkyrieCrypto.encrypt_data(argon_key, bytes_data)
         >>> decrypted_data = ValkyrieCrypto.decrypt_data(argon_key, encrypted_data)
     """
+    
+    @staticmethod
+    def __key__() -> bytes:
+        """
+        Generate a unique key for encrypting and decrypting the configuration file.
+        
+        Returns:
+            bytes: The generated key.
+        """
+        hwid = str(ValkyrieTools.generateHwid())
+        key = ValkyrieCrypto.generate_argon_key(hwid * 2, hwid)
+        return key
     
     @staticmethod
     def encrypt_data(key: bytes, data: any, mode: int = AES_CTR) -> dict:
@@ -228,6 +242,10 @@ class ValkyrieCrypto:
 
 
 if __name__ == '__main__':
+    # ================================
+    print("-" * 50)
+    # ================================
+    
     # Test the encrypt_data and decrypt_data functions
     sample_key = '0123456789abcdef0123456789abcdef'
     sample_iv = '0123456789abcdef'
@@ -245,3 +263,7 @@ if __name__ == '__main__':
     # Decrypt the ciphertext
     decryption_data = ValkyrieCrypto.decrypt_data(encryption_key, encryption_data)
     print('Decrypted data:', decryption_data)
+
+    # ================================
+    print("-" * 50)
+    # ================================

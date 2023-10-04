@@ -351,6 +351,10 @@ class ColorfulFormatter(logging.Formatter):
 
 
 if __name__ == '__main__':
+    # ================================
+    print("-" * 50)
+    # ================================
+    
     # With inspection
     log = ValkyrieLogger('info', useInspect = True)
     log.info(1, 1, 'val1,%s,val2,%s' % (10, 20))
@@ -363,6 +367,10 @@ if __name__ == '__main__':
     log.console('info', '# This is a info message')
     log.console('debug', '# This is a debug message')
     log.consoleError('# This is a error message')
+
+    # ================================
+    print("-" * 50)
+    # ================================
     
     # Without inspection
     log = ValkyrieLogger('debug', appName = 'ValkyrieLogger', useInspect = False)
@@ -376,3 +384,7 @@ if __name__ == '__main__':
     log.console('info', '# This is a info message')
     log.console('debug', '# This is a debug message')
     log.consoleError('# This is a error message')
+
+    # ================================
+    print("-" * 50)
+    # ================================

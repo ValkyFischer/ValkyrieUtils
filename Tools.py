@@ -252,6 +252,19 @@ class ValkyrieTools:
             return f"{seconds / 60:.2f} minutes {seconds % 60:.2f} seconds" if full else f"{seconds / 60:.2f} minutes"
         else:  # Seconds
             return f"{seconds:.2f} seconds"
+        
+    @staticmethod
+    def formatNumber(number: int | float) -> str:
+        """
+        Format the number in a human-readable format.
+        
+        Args:
+            number (int | float): The number to format, e.g 1,234,567.89
+            
+        Returns:
+            str: The formatted number.
+        """
+        return f"{number:,}"
 
     @staticmethod
     def generateHwid() -> str:
@@ -433,6 +446,20 @@ class ValkyrieTools:
         return hashed
     
     @staticmethod
+    def getFileData(file_path: str) -> bytes:
+        """
+        Read the given file and return its binary contents.
+        
+        Args:
+            file_path (str): The path to the file to be read.
+            
+        Returns:
+            bytes: The binary contents of the file.
+        """
+        with open(file_path, 'rb') as file:
+            return file.read()
+    
+    @staticmethod
     def getFileSize(file_path: str) -> int:
         """
         Get the size of the given file.
@@ -446,7 +473,7 @@ class ValkyrieTools:
         return os.path.getsize(file_path)
     
     @staticmethod
-    def getFileDate(file_path: str) -> str:
+    def getFileEdit(file_path: str) -> str:
         """
         Get the date of the given file.
         
@@ -483,6 +510,10 @@ class ValkyrieTools:
 
 
 if __name__ == '__main__':
+    # ================================
+    print("-" * 50)
+    # ================================
+    
     # List example
     print(f"List: {ValkyrieTools.isList([1, 2, 3])}")  # Returns True
     print(f"List: {ValkyrieTools.isList({'a': 1, 'b': 2})}")  # Returns False
@@ -526,3 +557,12 @@ if __name__ == '__main__':
     # markdown to html
     print(f"Markdown to HTML: {ValkyrieTools.markdownHtml('**Hello** *World*!')}")  # Returns <b>Hello</b> <i>World</i>!
     print(f"Markdown to HTML: {ValkyrieTools.markdownHtml('```*italic* **bold**```')}")  # Returns <pre><code>*italic* **bold**</code></pre>
+    
+    # read file list
+    print(f"File List: {ValkyrieTools.formatNumber(len(ValkyrieTools.getFileList('./')))}")  # Returns a list of all files in the given path
+    print(f"Files Data Size: {ValkyrieTools.formatSize(sum(ValkyrieTools.getFileSize(file) for file in ValkyrieTools.getFileList('./')))}")  # Returns a list of all files in the given path
+
+    # ================================
+    print("-" * 50)
+    # ================================
+    
