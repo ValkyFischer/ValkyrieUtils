@@ -466,11 +466,11 @@ class CryptoReader(JsonReader):
         if os.path.exists(self.path):
             with open(self.path) as file:
                 data = file.read()
-        
+            
             if not data:
                 raise Exception("Cannot read config!")
             
-            if self.argon_key is None:
+            if 'argon_key' not in self.__dict__ or self.argon_key is None:
                 self.argon_key = ValkyrieCrypto.__key__()
             
             encrypted_data = json.loads(data)
@@ -493,7 +493,7 @@ class CryptoReader(JsonReader):
         if file is None:
             file = self.path
             
-        if self.argon_key is None:
+        if 'argon_key' not in self.__dict__ or self.argon_key is None:
             self.argon_key = ValkyrieCrypto.__key__()
             
         pickled_data = pickle.dumps(config_dict)
