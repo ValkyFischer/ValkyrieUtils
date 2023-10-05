@@ -1,6 +1,22 @@
 ## Valkyrie Crypto Module
 
-The Crypto module (`Crypto.py`) provides functions to encrypt and decrypt data using AES-GCM, AES-CTR, and AES-CBC. Additionally, it offers a function to generate a key using Argon2, a memory-hard function designed to be resistant to GPU cracking attacks.
+### Table of Contents
+
+- [Valkyrie Crypto Module](#valkyrie-crypto-module)
+    - [Table of Contents](#table-of-contents)
+    - [About](#about)
+    - [Usage](#usage)
+    - [Example](#example)
+    - [Unit Tests](#unit-tests)
+    - [Supported Classes and Functions](#supported-classes-and-functions)
+    - [Supported Encryption Modes](#supported-encryption-modes)
+
+### About
+
+The Crypto module (`Crypto.py`) provides functions to encrypt and decrypt data using AES-GCM, AES-CTR, and AES-CBC. 
+Additionally, it offers a function to generate a key using Argon2, a memory-hard function designed to be resistant 
+to GPU cracking attacks. The module is designed to simplify the encryption and decryption of data by providing
+ready-to-use functions for common encryption modes. 
 
 ### Usage
 

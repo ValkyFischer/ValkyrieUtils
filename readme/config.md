@@ -1,5 +1,24 @@
 ## Valkyrie Config Module
 
+### Table of Contents
+
+- [Valkyrie Config Module](#valkyrie-config-module)
+    - [Table of Contents](#table-of-contents)
+    - [About](#about)
+    - [Usage](#usage)
+    - [Example](#example)
+    - [Unit Tests](#unit-tests)
+    - [Supported Classes and Functions](#supported-classes-and-functions)
+    - [File Formats](#file-formats)
+    - [Configuration File Examples](#configuration-file-examples)
+      - [example.ini](#exampleini)
+      - [example.xml](#examplexml)
+      - [example.json](#examplejson)
+      - [example.vcf](#examplevcf)
+    - [Notes](#notes)
+
+### About
+
 The Config module (`Config.py`) provides a versatile configuration reader for INI, XML, JSON and VCF files. 
 It allows users to easily read and retrieve configuration values from these file formats. 
 The supported operations include fetching values as strings, integers, floats, booleans, and dictionaries, allowing for flexible usage based on the configuration file type. 
@@ -126,6 +145,6 @@ order=2
 }
 ```
 
-### Note
+### Notes
 
 For any unsupported file format or operations, appropriate exceptions are raised.

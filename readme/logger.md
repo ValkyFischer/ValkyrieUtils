@@ -1,6 +1,23 @@
 ## Valkyrie Logger Module
 
-The Logger module (`Logger.py`) provides a flexible logging utility for creating log messages with various log levels, including info, debug, warning, error, and critical. It offers the ability to direct log messages to both a log file and/or the console. The module also supports formatting log messages with caller information and customizable message components.
+### Table of Contents
+
+- [Valkyrie Logger Module](#valkyrie-logger-module)
+    - [Table of Contents](#table-of-contents)
+    - [About](#about)
+    - [Usage](#usage)
+    - [Example](#example)
+    - [Unit Tests](#unit-tests)
+    - [Supported Classes and Functions](#supported-classes-and-functions)
+    - [Supported Log Levels](#supported-log-levels)
+    - [Customization](#customization)
+
+### About
+
+The Logger module (`Logger.py`) provides a flexible logging utility for creating log messages with various 
+log levels, including info, debug, warning, error, and critical. It offers the ability to direct log messages 
+to both a log file and/or the console. The module also supports formatting log messages with caller information 
+and customizable message components. 
 
 ### Usage
 

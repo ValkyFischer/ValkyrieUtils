@@ -1,6 +1,25 @@
 ## Valkyrie Package Module
 
-The Valkyrie Package module (`ValkyriePackage.py`) is a Python module that enables the creation, reading, and updating of VPK (Valkyrie Package) files. VPK files are designed to store data in a compressed and encrypted format. This module provides functionality for handling encryption, decryption, compression, and file management within VPK files.
+### Table of Contents
+
+- [Valkyrie Package Module](#valkyrie-package-module)
+    - [Table of Contents](#table-of-contents)
+    - [About](#about)
+    - [Usage](#usage)
+    - [Example](#example)
+    - [Unit Tests](#unit-tests)
+    - [Supported Classes and Functions](#supported-classes-and-functions)
+    - [VPK File Structure](#vpk-file-structure)
+        - [VPK Header](#vpk-header)
+        - [VPK Encrypted Data](#vpk-encrypted-data)
+    - [Notes](#notes)
+
+### About
+
+The Valkyrie Package module (`ValkyriePackage.py`) is a Python module that enables the creation, reading, and 
+updating of VPK (Valkyrie Package) files. VPK packages are intended to store data in a compressed and encrypted 
+format. This module provides functionality for handling encryption, decryption, compression, and file management 
+within VPK packages. 
 
 ### Usage
 
@@ -55,7 +74,7 @@ python -m unittest unittests/test_package.py
 
 ## VPK File Structure
 
-VPK files are structured as follows:
+VPK packages are structured as follows:
 
 ```
 VPK Package 

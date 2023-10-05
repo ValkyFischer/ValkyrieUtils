@@ -1,10 +1,28 @@
 ## Valkyrie Manifest Module
 
-The Manifest module (`Manifest.py`) provides a class to create a Valkyrie Manifest, a JSON file that contains 
-files and their hashes. This manifest is crucial for verifying the integrity of a directory of files, and to download 
-missing or modified files from a remote URL.
+### Table of Contents
 
-### Usage: Download Manifest Files
+- [Valkyrie Manifest Module](#valkyrie-manifest-module)
+    - [Table of Contents](#table-of-contents)
+    - [About](#about)
+    - [Usage](#usage)
+        - [Download Manifest Files](#download-manifest-files)
+        - [Creating Manifest Only](#creating-manifest-only)
+    - [Example](#example)
+    - [Unit Tests](#unit-tests)
+    - [Supported Classes and Functions](#supported-classes-and-functions)
+    - [Manifest Structure](#manifest-structure)
+    - [Notes](#notes)
+
+### About
+
+The Manifest module (`Manifest.py`) provides a class to create a Valkyrie Manifest, a JSON file that contains 
+files and their hashes. This manifest is crucial for verifying the integrity of a directory of files, is designed to 
+simplify the process of creating and updating manifests, and to download missing or modified files from a remote URL.
+
+### Usage 
+
+#### Download Manifest Files
 
 Here is an example of how to use the Manifest module to download missing or modified files from a remote URL:
 1. Import the Manifest module into your Python script.
@@ -16,7 +34,7 @@ Here is an example of how to use the Manifest module to download missing or modi
    - Optionally, you can specify the `full` parameter to include file size and last modified date in the manifest.
 7. Save the manifest using the `saveManifest()` method.
 
-### Usage: Creating Manifest Only
+#### Creating Manifest Only
 
 Here is an example of how to use the Manifest module to create a manifest without downloading any files:
 1. Import the Manifest module into your Python script.
