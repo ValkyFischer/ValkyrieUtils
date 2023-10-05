@@ -17,6 +17,7 @@ configuration parsing, command-line option parsing, data compression, data encry
   - [Package](#valkyrie-package)
   - [Tools](#valkyrie-tools)
 - [Examples](#examples)
+- [Unit Tests](#unit-tests)
 - [Community](#community)
   - [Creator](#creator)
   - [Contribution](#contribution)
@@ -108,7 +109,7 @@ You can find example usage of the Valkyrie Utils modules in the according readme
 - [Valkyrie Package](./readme/package.md#example) (Package.py)
 - [Valkyrie Tools](./readme/tools.md#example) (Tools.py)
 
-## Unittests
+## Unit Tests
 
 Each module in Valkyrie Utils has accompanying unittests located in the "unittests" folder. 
 These unittests are essential for ensuring the correct functionality of the modules and maintaining code quality. 
