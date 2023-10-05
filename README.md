@@ -1,6 +1,7 @@
 # Valkyrie Utils
 
-Valkyrie Utils is a Python utility library that provides convenient and flexible functionalities through its four main modules: Logger, Config, Options, Compressor, Crypto and Tools.
+Valkyrie Utils is a Python utility library that provides various modules to facilitate common tasks such as logging, 
+configuration parsing, command-line option parsing, data compression, data encryption, and data validation.
 
 ## Table of Contents
 
@@ -13,14 +14,30 @@ Valkyrie Utils is a Python utility library that provides convenient and flexible
   - [Compressor](#valkyrie-compressor)
   - [Crypto](#valkyrie-crypto)
   - [Manifest](#valkyrie-manifest)
+  - [Package](#valkyrie-package)
   - [Tools](#valkyrie-tools)
-- [Example Usage](#example-usage)
+- [Examples](#examples)
+- [Community](#community)
+  - [Creator](#creator)
+  - [Contribution](#contribution)
+  - [Acknowledgements](#acknowledgements)
+- [License](#license)
 
 ## About
 
-This utility library was created to demonstrate how to use ValkyrieUtils modules in Python applications. The modules 
-offer functionality to facilitate common tasks such as logging, configuration parsing, command-line option parsing, 
-data compression, data encryption, and data validation.
+Valkyrie Utils is a Python utility library that provides various modules to facilitate common tasks such as logging, 
+configuration parsing, command-line option parsing, data compression, data encryption, and data validation.
+
+The library is designed to simplify the development of Python applications by offering ready-to-use modules that 
+handle essential functionalities, saving you time and effort in implementing these features from scratch.
+
+Valkyrie Utils aims to be a versatile and user-friendly toolkit, suitable for a wide range of Python projects, 
+from simple scripts to complex applications. Whether you need to manage configuration files, create secure and 
+compressed data packages, or log application events, Valkyrie Utils has you covered.
+
+The library is actively maintained and expanded to meet the evolving needs of Python developers. It is open-source 
+and available for use in your projects under the MIT License.
+
 
 ## Usage
 
@@ -33,7 +50,10 @@ guidelines and examples. Here's a brief overview of each module:
 - **Compressor**: Provides a utility to compress and decompress data using various compression modes.
 - **Crypto**: Offers functions to encrypt and decrypt data using AES-GCM, AES-CTR, and AES-CBC.
 - **Manifest**: Provides a class to create a Valkyrie Manifest, and to download missing or modified files from a remote URL.
+- **Package**: Enables the creation, reading, and updating of encrypted VPK (Valkyrie Package) files.
 - **Tools**: Provides various functions such as data validation, data type matching, code generation, and more.
+
+---
 
 ## Modules
 
@@ -44,7 +64,7 @@ The Logger module (`Logger.py`) provides a flexible logging solution for Python 
 
 ### Valkyrie Config
 
-The Config module (`Config.py`) facilitates reading and parsing configuration files, supporting INI, XML and JSON formats. It provides methods to extract configuration values in various data types.
+The Config module (`Config.py`) facilitates reading and parsing configuration files, supporting INI, XML, JSON and VCF formats. It provides methods to extract configuration values in various data types.
 > - Refer to the [Valkyrie Config documentation](./readme/config.md) for more information.
 
 ### Valkyrie Options
@@ -64,64 +84,52 @@ The Crypto module (`Crypto.py`) provides functions to encrypt and decrypt data u
 The Manifest module (`Manifest.py`) provides a class to create a Valkyrie Manifest, a JSON file that contains files and their hashes. This manifest is crucial for verifying the integrity of a directory of files, and to download missing or modified files from a remote URL.
 > - Refer to the [Valkyrie Manifest documentation](./readme/manifest.md) for more information.
 
+### Valkyrie Package
+The Package module (`Package.py`) enables the creation, reading, and updating of encrypted VPK (Valkyrie Package) files. VPK files are designed to store data in a compressed and encrypted format. This module provides functionality for handling encryption, decryption, compression, and file management within VPK files.
+> - Refer to the [Valkyrie Package documentation](./readme/package.md) for more information.
+
 ### Valkyrie Tools
 
 The Tools module (`Tools.py`) offers functions to facilitate common tasks such as data validation, data type matching, code generation, and more, making it a useful utility module.
 > - Refer to the [Valkyrie Tools documentation](./readme/tools.md) for more information.
 
-## Example Usage
+---
 
-```python
-# Example usage of ValkyrieUtils modules
-# Run this script with the following command: python ValkyrieUtils.py --config_file examples/example.xml
+## Examples
 
-from Logger import ValkyrieLogger
-from Config import ValkyrieConfig
-from Tools import ValkyrieTools
-from Options import ValkyrieOptions
-from Compressor import ValkyrieCompressor
-from Crypto import ValkyrieCrypto, AES_GCM
+You can find example usage of the Valkyrie Utils modules in the according readme files.
 
-# Create a new logger instance
-logger = ValkyrieLogger('debug', 'logs/logger.log', 'ValkyrieUtils', True)
-logger.info('Loading a new Valkyrie Logger instance')
+- [Valkyrie Logger](./readme/logger.md#example) (Logger.py)
+- [Valkyrie Config](./readme/config.md#example) (Config.py)
+- [Valkyrie Options](./readme/options.md#example) (Options.py)
+- [Valkyrie Compressor](./readme/compressor.md#example) (Compressor.py)
+- [Valkyrie Crypto](./readme/crypto.md#example) (Crypto.py)
+- [Valkyrie Manifest](./readme/manifest.md#example) (Manifest.py)
+- [Valkyrie Package](./readme/package.md#example) (Package.py)
+- [Valkyrie Tools](./readme/tools.md#example) (Tools.py)
 
-# Initialize the command line options
-parser = ValkyrieOptions([
-  ('config_file', 'str', 'Configuration File Path and filename', 'examples/example.ini'),
-])
-options = parser.parse()
-ext = options.config_file.split('.')[-1]
+## Community
 
-# Read the configuration file
-config = ValkyrieConfig(f'examples/example.{ext}')
+### Creator
 
-# Get the complete configuration as a dictionary
-config_dict = ValkyrieTools.matchDict(config.get_config())
+This project was created by and is maintained by [Valky Fischer](https://valky.dev/en). Contact me if needed.
+- [@v_lky](https://discord.gg/vky) on Discord
+- [@v_lky](https://twitch.tv/v_lky) on Twitch
+- [@ValkyDev](https://twitter.com/ValkyDev) on Twitter
 
-# Get the configuration nodes as a dictionary
-config_dict_1 = ValkyrieTools.matchDict(config.get_dict("Test1"))
-config_dict_2 = ValkyrieTools.matchDict(config.get_dict("Test2"))
 
-# Compress the configuration data
-compressed_config = ValkyrieCompressor.deflate(pickle.dumps(config_dict), 'zstd')
+### Contribution
 
-# Create a new argon encryption key
-_key = ValkyrieTools.generateCode(64)
-_iv = ValkyrieTools.generateCode(24)
-argon_key = ValkyrieCrypto.generate_argon_key(_key, _iv)
+Contributions to Valkyrie Utils are welcome and appreciated. 
 
-# Encrypt the compressed configuration data
-encrypted_config = ValkyrieCrypto.encrypt_data(argon_key, compressed_config, AES_GCM)
+By contributing to this project, you help make it better and more useful for everyone.  
+Here are a few guidelines to follow: [Contribution Guidelines](CONTRIBUTION.md)
 
-# Decrypt the ciphertext
-decryption_config = ValkyrieCrypto.decrypt_data(argon_key, encrypted_config, AES_GCM)
 
-# Decompress the configuration data
-decompressed_config = pickle.loads(ValkyrieCompressor.inflate(decryption_config, 'zstd'))
-```
+### Acknowledgements
 
-The above example showcases how to utilize ValkyrieUtils modules in a Python script. Modify the `run_test` function as needed to suit your application's requirements.
+I would like to acknowledge the following contributors for their support and contributions to this project:
+- *None*
 
 ---
 
