@@ -42,6 +42,17 @@ print(config_json.get_config())
 
 In this example, we demonstrate how to read configuration values from `INI`, `XML`, `JSON` and `VCF` files using the Config module.
 
+
+### Unit Tests
+
+The ValkyrieConfig module includes unit tests to ensure that the module is working as intended. To run the unit tests, 
+run the following command in the root directory of the project:
+
+```bash
+python -m unittest unittests/test_config.py
+```
+
+
 ### Supported Classes and Functions
 - `ValkyrieConfig`: A class to read configuration from INI, XML and JSON files.
     - `__init__(file)`: Initialize a configuration reader instance.

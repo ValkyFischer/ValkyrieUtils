@@ -35,6 +35,15 @@ VPK.update(vpk_content, "path/to/existing/package.vpk")
 
 In this example, we demonstrate how to create, read, and update VPK packages using the Valkyrie Package module.
 
+### Unit Tests
+
+The ValkyriePackage module includes unit tests to ensure that the module is working as intended. To run the unit tests, 
+run the following command in the root directory of the project:
+
+```bash
+python -m unittest unittests/test_package.py
+```
+
 ## Supported Classes and Functions
 
 - `ValkyriePackage`: The main class for handling VPK packages.

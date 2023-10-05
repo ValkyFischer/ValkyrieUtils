@@ -36,6 +36,15 @@ print('Decrypted data:', decryption_data)
 In this example, we demonstrate how to use the Crypto module to encrypt and decrypt data using `AES-GCM`. We also 
 showcase the ability to generate an argon key using Argon2.
 
+### Unit Tests
+
+The ValkyrieCrypto module includes unit tests to ensure that the module is working as intended. To run the unit tests, 
+run the following command in the root directory of the project:
+
+```bash
+python -m unittest unittests/test_crypto.py
+```
+
 ### Supported Classes and Functions
 
 - `ValkyrieCrypto`: A class to encrypt and decrypt data using AES-GCM, AES-CTR, and AES-CBC.

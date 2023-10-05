@@ -42,6 +42,15 @@ print(ValkyrieTools.markdownHtml('**Hello** *world*!'))
 In this example, we demonstrate how to use the `ValkyrieTools` module to check and match various types of input. 
 We also showcase the ability to generate a unique hardware ID and format Markdown text to HTML.
 
+### Unit Tests
+
+The ValkyrieTools module includes unit tests to ensure that the module is working as intended. To run the unit tests,
+run the following command in the root directory of the project:
+
+```bash
+python -m unittest unittests/test_tools.py
+```
+
 ### Supported Classes and Functions
 
 - `ValkyrieTools`: A class to provide utility functions.

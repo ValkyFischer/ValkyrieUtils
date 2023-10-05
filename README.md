@@ -108,6 +108,21 @@ You can find example usage of the Valkyrie Utils modules in the according readme
 - [Valkyrie Package](./readme/package.md#example) (Package.py)
 - [Valkyrie Tools](./readme/tools.md#example) (Tools.py)
 
+## Unittests
+
+Each module in Valkyrie Utils has accompanying unittests located in the "unittests" folder. 
+These unittests are essential for ensuring the correct functionality of the modules and maintaining code quality. 
+To run the unittests for a specific module, use a Python testing framework like `unittest` or `pytest` and point it to the relevant test files in the "unittests" folder.
+
+- `ValkyrieLogger` - `python -m unittest unittests/test_logger.py`
+- `ValkyrieConfig` - `python -m unittest unittests/test_config.py`
+- `ValkyrieOptions` - `python -m unittest unittests/test_options.py`
+- `ValkyrieCompressor` - `python -m unittest unittests/test_compressor.py`
+- `ValkyrieCrypto` - `python -m unittest unittests/test_crypto.py`
+- `ValkyrieManifest` - `python -m unittest unittests/test_manifest.py`
+- `ValkyriePackage` - `python -m unittest unittests/test_package.py`
+- `ValkyrieTools` - `python -m unittest unittests/test_tools.py`
+
 ## Community
 
 ### Creator

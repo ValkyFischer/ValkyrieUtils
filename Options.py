@@ -79,9 +79,10 @@ class ValkyrieOptions:
                 help (str): The help text for the option.
                 default_value (any): The default value for the option.
         """
-        for option in options[0]:
-            name, data_type, help_text = option[:3]
-            self._parser.add_option('--' + name, dest = name, type = data_type, help = help_text, default = None if len(option) < 4 else option[3])
+        if len(options) >= 1:
+            for option in options[0]:
+                name, data_type, help_text = option[:3]
+                self._parser.add_option('--' + name, dest = name, type = data_type, help = help_text, default = None if len(option) < 4 else option[3])
     
     def parse(self, args = None):
         """

@@ -37,6 +37,15 @@ In this example, we define two options, `server_id` and `config_file`, with spec
 default values. We then parse the command-line arguments and access the parsed options through a dictionary-like 
 interface.
 
+### Unit Tests
+
+The ValkyrieOptions module includes unit tests to ensure that the module is working as intended. To run the unit tests,
+run the following command in the root directory of the project:
+
+```bash
+python -m unittest unittests/test_options.py
+```
+
 ### Supported Classes and Functions
 
 - `ValkyrieOptions`: A class to manage command-line options and configuration. It uses `OptionParser` to handle command-line options.

@@ -69,6 +69,17 @@ _new_manifest = VM.updateManifest(_local_manifest, _files_to_update)
 VM.saveManifest(_new_manifest)
 ```
 
+In this example, we demonstrate how to use the Manifest module to download missing or modified files from a remote URL.
+
+### Unit Tests
+
+The ValkyrieManifest module includes unit tests to ensure that the module is working as intended. To run the unit tests,
+run the following command in the root directory of the project:
+
+```bash
+python -m unittest unittests/test_manifest.py
+```
+
 ### Supported Classes and Functions
 
 - `ValkyrieManifest`: A class to create a manifest of files in a directory.

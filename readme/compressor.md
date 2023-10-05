@@ -25,6 +25,16 @@ print(f"Decompressed data : {sample_decompressed}")
 
 In this example, we demonstrate how to use the Compressor module to compress and decompress data using `Zstandard` compression.
 
+
+### Unit Tests
+
+The ValkyrieCompressor module includes unit tests to ensure that the module is working as intended. To run the unit tests, 
+run the following command in the root directory of the project:
+
+```bash
+python -m unittest unittests/test_compressor.py
+```
+
 ### Supported Classes and Functions
 
 - `ValkyrieCompressor`: A class to compress and decompress data using various compression modes such as gzip, bzip2, lzma, lz4, zstd, and none.

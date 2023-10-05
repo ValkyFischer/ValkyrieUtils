@@ -35,6 +35,15 @@ log.consoleError('# This is an error message')
 In this example, we create a logger with the `info` log level, directing log messages to both a log file and the 
 console. We then log various messages using different log functions.
 
+### Unit Tests
+
+The ValkyrieLogger module includes unit tests to ensure that the module is working as intended. To run the unit tests,
+run the following command in the root directory of the project:
+
+```bash
+python -m unittest unittests/test_logger.py
+```
+
 ### Supported Classes and Functions
 
 - `ValkyrieLogger`: A class to create a logger instance.

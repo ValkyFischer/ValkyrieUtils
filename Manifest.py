@@ -177,11 +177,11 @@ class ValkyrieManifest:
         self.logger.info(f"Manifest path: {self.save_path}/{self.save_name}.json")
         self.logger.info(f"Total files hashed: {len(file_list)}")
         if not self.full:
-            self.logger.info(f"Basic job finished: {round(time.time() - self.start, 3)}sec ({app_path[1]})")
+            self.logger.info(f"Basic job finished: {round(time.time() - self.start, 3)}sec ({len(file_list)})")
         else:
             total_size = sum(item[1] for item in hash_dict.values())
             self.logger.info(f"Total files size: {ValkyrieTools.formatSize(total_size)}")
-            self.logger.info(f"Full job finished: {round(time.time() - self.start, 3)}sec ({app_path[1]})")
+            self.logger.info(f"Full job finished: {round(time.time() - self.start, 3)}sec ({len(file_list)})")
         self.logger.info("-" * 50)
         
     def updateManifest(self, local_manifest, update_paths):
