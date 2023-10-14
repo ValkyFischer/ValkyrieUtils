@@ -86,8 +86,8 @@ import xml.dom.minidom
 import os
 from collections import OrderedDict
 
-from Crypto import ValkyrieCrypto, AES_GCM
-from Tools import ValkyrieTools
+from .Crypto import ValkyrieCrypto, AES_GCM
+from .Tools import ValkyrieTools
 
 
 # ===============================
@@ -110,8 +110,8 @@ class ValkyrieConfig:
             self.logger.setLevel(logging.DEBUG if debug else logging.INFO)
             self.logger.addHandler(logging.StreamHandler())
         self.encrypt = False
-        self.ext: str
-        self.config_handler: IniReader | XmlReader | JsonReader | CryptoReader
+        self.ext: str = None
+        self.config_handler: IniReader | XmlReader | JsonReader | CryptoReader = None
         self._detect()
     
     def _detect(self):

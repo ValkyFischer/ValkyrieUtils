@@ -218,6 +218,26 @@ class ValkyrieLogger:
             if self.PATH is not None:
                 self.ConsoleLogger.debug(message)
     
+    def warning(self, *strMsg, **kwStrMsg):
+        """
+        Write a log message at the warning level.
+
+        Args:
+            *strMsg: Variable positional arguments for the log message.
+            **kwStrMsg: Variable keyword arguments for the log message.
+        """
+        if self.LOG_LEVEL > logging.WARNING:
+            return None
+        
+        message = self.ProcessMsg(strMsg, kwStrMsg)
+        
+        if self.IsConsoleOnly:
+            self.ConsoleLogger.warning(message)
+        else:
+            self.Logger.warning(message)
+            if self.PATH is not None:
+                self.ConsoleLogger.warning(message)
+    
     def error(self, *strMsg, **kwStrMsg):
         """
         Write a log message at the error level.

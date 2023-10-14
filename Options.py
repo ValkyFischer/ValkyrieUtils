@@ -101,24 +101,25 @@ class ValkyrieOptions:
         if 'config_file' not in result or result['config_file'] is None:
             return CmdOptions(result)
         
-        try:
-            with open(result['config_file'], 'r') as fp:
-                for line in fp:
-                    line = line.strip()
-                    if line.startswith('[') or line.startswith('#'):
-                        continue
-                    if '=' in line:
-                        key, value = line.split('=', 1)
-                    option = self._parser.get_option('--' + key)
-                    if option is None or key in result and result[key] is not None:
-                        continue
-                    if option.type == 'int':
-                        result[key] = int(value)
-                    else:
-                        result[key] = value.strip()
-        
-        except IOError:
-            pass
+        # try:
+        #     with open(result['config_file'], 'r') as fp:
+        #         for line in fp:
+        #             line = line.strip()
+        #             print(line)
+        #             if line.startswith('[') or line.startswith('#'):
+        #                 continue
+        #             if '=' in line:
+        #                 key, value = line.split('=', 1)
+        #             option = self._parser.get_option('--' + key)
+        #             if option is None or key in result and result[key] is not None:
+        #                 continue
+        #             if option.type == 'int':
+        #                 result[key] = int(value)
+        #             else:
+        #                 result[key] = value.strip()
+        #
+        # except IOError:
+        #     pass
         
         return CmdOptions(result)
 
