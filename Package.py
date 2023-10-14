@@ -10,10 +10,16 @@ import pickle
 import struct
 import time
 
-from .Compressor import ValkyrieCompressor
-from .Crypto import ValkyrieCrypto, MODES_D
-from .Tools import ValkyrieTools
-from .Exceptions import *
+try:
+    from .Compressor import ValkyrieCompressor
+    from .Crypto import ValkyrieCrypto, MODES_D
+    from .Tools import ValkyrieTools
+    from .Exceptions import *
+except ImportError:
+    from Compressor import ValkyrieCompressor
+    from Crypto import ValkyrieCrypto, MODES_D
+    from Tools import ValkyrieTools
+    from Exceptions import *
 
 
 class ValkyriePackage:

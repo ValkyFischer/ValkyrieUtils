@@ -46,7 +46,10 @@ import urllib.request
 
 from tqdm import tqdm
 from multiprocessing import cpu_count
-from .Tools import ValkyrieTools
+try:
+    from .Tools import ValkyrieTools
+except ImportError:
+    from Tools import ValkyrieTools
 
 
 class ValkyrieManifest:

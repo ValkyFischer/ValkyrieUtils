@@ -86,8 +86,12 @@ import xml.dom.minidom
 import os
 from collections import OrderedDict
 
-from .Crypto import ValkyrieCrypto, AES_GCM
-from .Tools import ValkyrieTools
+try:
+    from .Crypto import ValkyrieCrypto, AES_GCM
+    from .Tools import ValkyrieTools
+except ImportError:
+    from Crypto import ValkyrieCrypto, AES_GCM
+    from Tools import ValkyrieTools
 
 
 # ===============================

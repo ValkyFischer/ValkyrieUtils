@@ -31,7 +31,10 @@ Example:
 
 import argon2
 from Cryptodome.Cipher import AES
-from .Tools import ValkyrieTools
+try:
+    from .Tools import ValkyrieTools
+except ImportError:
+    from Tools import ValkyrieTools
 
 
 # ===============================
