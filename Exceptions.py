@@ -37,3 +37,10 @@ class VpkError(Exception):
     def __init__(self, message="An error occurred while processing the VPK package."):
         self.message = message
         super().__init__(self.message)
+
+class ConfigError(Exception):
+    """Exception raised for errors related to configuration files."""
+
+    def __init__(self, message="An error occurred while processing the configuration file."):
+        self.message = message
+        super().__init__(self.message)
