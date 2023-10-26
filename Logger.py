@@ -194,7 +194,7 @@ class ValkyrieLogger:
         if self.IsConsoleOnly:
             self.ConsoleLogger.info(message)
         else:
-            self.Logger.info(message)
+            self.Logger.info(message.encode('utf-8'))
             if self.PATH is not None:
                 self.ConsoleLogger.info(message)
     
@@ -214,7 +214,7 @@ class ValkyrieLogger:
         if self.IsConsoleOnly:
             self.ConsoleLogger.debug(message)
         else:
-            self.Logger.debug(message)
+            self.Logger.debug(message.encode('utf-8'))
             if self.PATH is not None:
                 self.ConsoleLogger.debug(message)
     
@@ -234,7 +234,7 @@ class ValkyrieLogger:
         if self.IsConsoleOnly:
             self.ConsoleLogger.warning(message)
         else:
-            self.Logger.warning(message)
+            self.Logger.warning(message.encode('utf-8'))
             if self.PATH is not None:
                 self.ConsoleLogger.warning(message)
     
@@ -258,7 +258,7 @@ class ValkyrieLogger:
         if self.IsConsoleOnly:
             self.ConsoleErrLogger.error(message)
         else:
-            self.Logger.error(message)
+            self.Logger.error(message.encode('utf-8'))
             if self.PATH is not None:
                 self.ConsoleErrLogger.error(message)
     
