@@ -40,6 +40,7 @@ import re
 import secrets
 import string
 import time
+import magic
 
 
 # ===============================
@@ -504,6 +505,13 @@ class ValkyrieTools:
                     filepath = f"{dirs}/{file}".replace('\\', '/')
                     file_list.append(filepath)
         return file_list
+    
+    @staticmethod
+    def getFileType(item_data, no_meme = False):
+        """Get info about file data."""
+        kind = magic.from_buffer(item_data, mime = False)
+        kind_meme = magic.from_buffer(item_data, mime = True)
+        return kind_meme if not no_meme else kind
 
 
 # ===============================
